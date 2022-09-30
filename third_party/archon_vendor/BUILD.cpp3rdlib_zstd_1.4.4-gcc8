@@ -1,0 +1,26 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "zstd",
+  srcs = ["cpp3rdlib/zstd/lib/libzstd.a",
+  ],
+  hdrs = glob(["cpp3rdlib/zstd/include/**/*",
+               "cpp3rdlib/zstd/**/*.h",
+               "cpp3rdlib/zstd/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/zstd/include",
+              ".",
+              "cpp3rdlib/zstd"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+)
+
+filegroup(
+  name = "zstd_lib",
+  srcs = ["cpp3rdlib/zstd/lib",
+  ],
+)
+

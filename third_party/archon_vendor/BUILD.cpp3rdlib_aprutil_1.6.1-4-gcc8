@@ -1,0 +1,32 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "aprutil-1",
+  srcs = ["cpp3rdlib/aprutil/lib/libaprutil-1.a",
+  ],
+  hdrs = glob(["cpp3rdlib/aprutil/include/**/*",
+               "cpp3rdlib/aprutil/**/*.h",
+               "cpp3rdlib/aprutil/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/aprutil/include",
+              ".",
+              "cpp3rdlib/aprutil"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+  linkopts = [
+    "-lexpat",
+  ],
+  deps = ["@cpp3rdlib_apr_1.6.5-1-gcc8//:apr-1",
+  ],
+)
+
+filegroup(
+  name = "aprutil-1_lib",
+  srcs = ["cpp3rdlib/aprutil/lib",
+          "@cpp3rdlib_apr_1.6.5-1-gcc8//:apr-1_lib"
+  ],
+)
+

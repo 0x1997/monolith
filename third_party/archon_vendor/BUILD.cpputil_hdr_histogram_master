@@ -1,0 +1,28 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "HdrHistogram",
+  srcs = ["cpputil/hdr_histogram/hdr_histogram.cpp",
+  ],
+  hdrs = ["cpputil/hdr_histogram/hdr_histogram.hpp"],
+  includes = ["cpputil/hdr_histogram",
+              "."
+  ],
+  copts = ["-std=c++14",
+           "-I.",
+           "-Wall",
+           "-Werror",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter",
+           "-Wno-error=unused-variable"
+  ],
+  deps = ["@com_google_glog//:glog",
+  ],
+)
+
+filegroup(
+  name = "HdrHistogram_lib",
+  srcs = ["cpputil/hdr_histogram/lib",
+          "@com_google_glog//:glog_lib"
+  ],
+)
+

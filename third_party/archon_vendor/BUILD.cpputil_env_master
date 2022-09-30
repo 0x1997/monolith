@@ -1,0 +1,23 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "env",
+    srcs = glob([
+        "src/*.cpp",
+        "v2/src/*.cpp",
+    ]),
+    hdrs = glob([
+        "**/*.h",
+    ]),
+    copts = [
+        "-O3",
+        "-g",
+        "-Wall",
+        "-Wextra",
+    ],
+    includes = [
+        "include",
+        "v2/include",
+        ".",
+    ],
+)

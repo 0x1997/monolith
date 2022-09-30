@@ -1,0 +1,433 @@
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "fbthrift1_bin",
+    srcs = [
+        "cpp3rdlib/fbthrift/bin/fbthrift1",
+    ],
+)
+
+filegroup(
+    name = "fbthrift1_header",
+    srcs = glob([
+        "cpp3rdlib/fbthrift/include/**/*",
+    ]),
+)
+
+cc_library(
+    name = "protocol",
+    srcs = ["cpp3rdlib/fbthrift/lib/libprotocol.a"],
+    hdrs = glob([
+        "cpp3rdlib/fbthrift/include/**/*",
+        "cpp3rdlib/fbthrift/**/*.h",
+        "cpp3rdlib/fbthrift/**/*.hpp",
+    ]),
+    copts = [
+        "-Wno-error=unused-variable",
+        "-I.",
+        "-Wno-error=unused-but-set-variable",
+        "-Wno-error=unused-parameter",
+    ],
+    includes = [
+        ".",
+        "cpp3rdlib/fbthrift",
+        "cpp3rdlib/fbthrift/include",
+    ],
+    deps = [
+        "@cpp3rdlib_folly_v2018.08.20.00-gcc8//:folly",
+        "@com_google_glog//:glog",
+    ],
+)
+
+cc_library(
+    name = "transport",
+    srcs = [
+        "cpp3rdlib/fbthrift/lib/libtransport.a",
+    ],
+    hdrs = glob([
+        "cpp3rdlib/fbthrift/include/**/*",
+        "cpp3rdlib/fbthrift/**/*.h",
+        "cpp3rdlib/fbthrift/**/*.hpp",
+    ]),
+    copts = [
+        "-Wno-error=unused-variable",
+        "-I.",
+        "-Wno-error=unused-but-set-variable",
+        "-Wno-error=unused-parameter",
+    ],
+    includes = [
+        ".",
+        "cpp3rdlib/fbthrift",
+        "cpp3rdlib/fbthrift/include",
+    ],
+    deps = [
+        ":thrift-core",
+        ":thriftprotocol",
+        "@cpp3rdlib_folly_v2018.08.20.00-gcc8//:folly",
+        "@cpp3rdlib_openssl_1.0.2-gcc8//:crypto",
+        "@cpp3rdlib_openssl_1.0.2-gcc8//:ssl",
+        "@zlib//:zlib",
+        "@cpp3rdlib_zstd_1.4.4-gcc8//:zstd",
+        "@com_github_gflags_gflags//:gflags",
+    ],
+)
+
+filegroup(
+    name = "transport_lib",
+    srcs = [
+        "cpp3rdlib/fbthrift/lib",
+        ":thrift-core_lib",
+        "@cpp3rdlib_folly_v2018.08.20.00-gcc8//:folly_lib",
+        "@cpp3rdlib_openssl_1.0.2-gcc8//:crypto_lib",
+        "@cpp3rdlib_openssl_1.0.2-gcc8//:ssl_lib",
+        "@zlib//:zlib_lib",
+        "@cpp3rdlib_zstd_1.4.4-gcc8//:zstd_lib",
+        "@com_github_gflags_gflags//:gflags_lib",
+    ],
+)
+
+cc_library(
+    name = "thrift-core",
+    srcs = [
+        "cpp3rdlib/fbthrift/lib/libthrift-core.a",
+    ],
+    hdrs = glob([
+        "cpp3rdlib/fbthrift/include/**/*",
+        "cpp3rdlib/fbthrift/**/*.h",
+        "cpp3rdlib/fbthrift/**/*.hpp",
+    ]),
+    copts = [
+        "-Wno-error=unused-variable",
+        "-I.",
+        "-Wno-error=unused-but-set-variable",
+        "-Wno-error=unused-parameter",
+    ],
+    includes = [
+        ".",
+        "cpp3rdlib/fbthrift",
+        "cpp3rdlib/fbthrift/include",
+    ],
+    deps = [
+        "@cpp3rdlib_folly_v2018.08.20.00-gcc8//:folly",
+    ],
+)
+
+filegroup(
+    name = "thrift-core_lib",
+    srcs = [
+        "cpp3rdlib/fbthrift/lib",
+        "@cpp3rdlib_folly_v2018.08.20.00-gcc8//:folly_lib",
+    ],
+)
+
+cc_library(
+    name = "thriftcpp2",
+    srcs = [
+        "cpp3rdlib/fbthrift/lib/libthriftcpp2.a",
+    ],
+    hdrs = glob([
+        "cpp3rdlib/fbthrift/include/**/*",
+        "cpp3rdlib/fbthrift/**/*.h",
+        "cpp3rdlib/fbthrift/**/*.hpp",
+    ]),
+    copts = [
+        "-Wno-error=unused-variable",
+        "-I.",
+        "-Wno-error=unused-but-set-variable",
+        "-Wno-error=unused-parameter",
+    ],
+    includes = [
+        ".",
+        "cpp3rdlib/fbthrift",
+        "cpp3rdlib/fbthrift/include",
+    ],
+    deps = [
+        ":security",
+    ],
+)
+
+filegroup(
+    name = "thriftcpp2_lib",
+    srcs = [
+        "cpp3rdlib/fbthrift/lib",
+        ":security_lib",
+    ],
+)
+
+cc_library(
+    name = "thrift",
+    srcs = [
+        "cpp3rdlib/fbthrift/lib/libthrift.a",
+    ],
+    hdrs = glob([
+        "cpp3rdlib/fbthrift/include/**/*",
+        "cpp3rdlib/fbthrift/**/*.h",
+        "cpp3rdlib/fbthrift/**/*.hpp",
+    ]),
+    copts = [
+        "-Wno-error=unused-variable",
+        "-I.",
+        "-Wno-error=unused-but-set-variable",
+        "-Wno-error=unused-parameter",
+    ],
+    includes = [
+        ".",
+        "cpp3rdlib/fbthrift",
+        "cpp3rdlib/fbthrift/include",
+    ],
+    linkopts = [
+        "-lrt",
+    ],
+    deps = [
+        ":async",
+        ":protocol",
+        "@cpp3rdlib_folly_v2018.08.20.00-gcc8//:folly",
+        "@com_google_glog//:glog",
+    ],
+)
+
+filegroup(
+    name = "thrift_lib",
+    srcs = [
+        "cpp3rdlib/fbthrift/lib",
+        ":async_lib",
+        "@cpp3rdlib_folly_v2018.08.20.00-gcc8//:folly_lib",
+        
+    ],
+)
+
+cc_library(
+    name = "async",
+    srcs = [
+        "cpp3rdlib/fbthrift/lib/libasync.a",
+    ],
+    hdrs = glob([
+        "cpp3rdlib/fbthrift/include/**/*",
+        "cpp3rdlib/fbthrift/**/*.h",
+        "cpp3rdlib/fbthrift/**/*.hpp",
+    ]),
+    copts = [
+        "-Wno-error=unused-variable",
+        "-I.",
+        "-Wno-error=unused-but-set-variable",
+        "-Wno-error=unused-parameter",
+    ],
+    includes = [
+        ".",
+        "cpp3rdlib/fbthrift",
+        "cpp3rdlib/fbthrift/include",
+    ],
+    deps = [
+        ":concurrency",
+        "@cpp3rdlib_boost_1.72.0-gcc8//:boost_atomic",
+        "@cpp3rdlib_boost_1.72.0-gcc8//:boost_date_time",
+        "@cpp3rdlib_boost_1.72.0-gcc8//:boost_filesystem",
+        "@cpp3rdlib_boost_1.72.0-gcc8//:boost_iostreams",
+        "@cpp3rdlib_boost_1.72.0-gcc8//:boost_regex",
+        "@cpp3rdlib_boost_1.72.0-gcc8//:boost_system",
+        "@cpp3rdlib_boost_1.72.0-gcc8//:boost_thread",
+        "@cpp3rdlib_folly_v2018.08.20.00-gcc8//:folly",
+        "@com_google_glog//:glog",
+        "@cpp3rdlib_mstch_1.0.2-gcc8//:mstch",
+        "@cpp3rdlib_openssl_1.0.2-gcc8//:crypto",
+        "@cpp3rdlib_openssl_1.0.2-gcc8//:ssl",
+    ],
+)
+
+filegroup(
+    name = "async_lib",
+    srcs = [
+        "cpp3rdlib/fbthrift/lib",
+        ":concurrency_lib",
+        "@cpp3rdlib_boost_1.72.0-gcc8//:boost_atomic_lib",
+        "@cpp3rdlib_boost_1.72.0-gcc8//:boost_date_time_lib",
+        "@cpp3rdlib_boost_1.72.0-gcc8//:boost_filesystem_lib",
+        "@cpp3rdlib_boost_1.72.0-gcc8//:boost_iostreams_lib",
+        "@cpp3rdlib_boost_1.72.0-gcc8//:boost_regex_lib",
+        "@cpp3rdlib_boost_1.72.0-gcc8//:boost_system_lib",
+        "@cpp3rdlib_boost_1.72.0-gcc8//:boost_thread_lib",
+        "@cpp3rdlib_folly_v2018.08.20.00-gcc8//:folly_lib",
+        
+        "@cpp3rdlib_mstch_1.0.2-gcc8//:mstch_lib",
+        "@cpp3rdlib_openssl_1.0.2-gcc8//:crypto_lib",
+        "@cpp3rdlib_openssl_1.0.2-gcc8//:ssl_lib",
+    ],
+)
+
+cc_library(
+    name = "concurrency",
+    srcs = [
+        "cpp3rdlib/fbthrift/lib/libconcurrency.a",
+    ],
+    hdrs = glob([
+        "cpp3rdlib/fbthrift/include/**/*",
+        "cpp3rdlib/fbthrift/**/*.h",
+        "cpp3rdlib/fbthrift/**/*.hpp",
+    ]),
+    copts = [
+        "-Wno-error=unused-variable",
+        "-I.",
+        "-Wno-error=unused-but-set-variable",
+        "-Wno-error=unused-parameter",
+    ],
+    includes = [
+        ".",
+        "cpp3rdlib/fbthrift",
+        "cpp3rdlib/fbthrift/include",
+    ],
+    deps = [
+        "@cpp3rdlib_folly_v2018.08.20.00-gcc8//:folly",
+        "@com_github_gflags_gflags//:gflags",
+        "@com_google_glog//:glog",
+    ],
+)
+
+filegroup(
+    name = "concurrency_lib",
+    srcs = [
+        "cpp3rdlib/fbthrift/lib",
+        "@cpp3rdlib_folly_v2018.08.20.00-gcc8//:folly_lib",
+        "@com_github_gflags_gflags//:gflags_lib",
+        
+    ],
+)
+
+cc_library(
+    name = "thriftfrozen2",
+    srcs = [
+        "cpp3rdlib/fbthrift/lib/libthriftfrozen2.a",
+    ],
+    hdrs = glob([
+        "cpp3rdlib/fbthrift/include/**/*",
+        "cpp3rdlib/fbthrift/**/*.h",
+        "cpp3rdlib/fbthrift/**/*.hpp",
+    ]),
+    copts = [
+        "-Wno-error=unused-variable",
+        "-I.",
+        "-Wno-error=unused-but-set-variable",
+        "-Wno-error=unused-parameter",
+    ],
+    includes = [
+        ".",
+        "cpp3rdlib/fbthrift",
+        "cpp3rdlib/fbthrift/include",
+    ],
+    deps = [
+        "@cpp3rdlib_folly_v2018.08.20.00-gcc8//:folly",
+        "@com_github_gflags_gflags//:gflags",
+        "@com_google_glog//:glog",
+    ],
+)
+
+filegroup(
+    name = "thriftfrozen2_lib",
+    srcs = [
+        "cpp3rdlib/fbthrift/lib",
+        "@cpp3rdlib_folly_v2018.08.20.00-gcc8//:folly_lib",
+        "@com_github_gflags_gflags//:gflags_lib",
+        
+    ],
+)
+
+cc_library(
+    name = "security",
+    srcs = [
+        "cpp3rdlib/fbthrift/lib/libsecurity.a",
+    ],
+    hdrs = glob([
+        "cpp3rdlib/fbthrift/include/**/*",
+        "cpp3rdlib/fbthrift/**/*.h",
+        "cpp3rdlib/fbthrift/**/*.hpp",
+    ]),
+    copts = [
+        "-Wno-error=unused-variable",
+        "-I.",
+        "-Wno-error=unused-but-set-variable",
+        "-Wno-error=unused-parameter",
+    ],
+    includes = [
+        ".",
+        "cpp3rdlib/fbthrift",
+        "cpp3rdlib/fbthrift/include",
+    ],
+    deps = [
+        "@cpp3rdlib_boost_1.72.0-gcc8//:boost_atomic",
+        "@cpp3rdlib_boost_1.72.0-gcc8//:boost_date_time",
+        "@cpp3rdlib_boost_1.72.0-gcc8//:boost_filesystem",
+        "@cpp3rdlib_boost_1.72.0-gcc8//:boost_iostreams",
+        "@cpp3rdlib_boost_1.72.0-gcc8//:boost_regex",
+        "@cpp3rdlib_boost_1.72.0-gcc8//:boost_system",
+        "@cpp3rdlib_boost_1.72.0-gcc8//:boost_thread",
+        "@cpp3rdlib_comerr_1.44.5-gcc8//:com_err",
+        "@cpp3rdlib_folly_v2018.08.20.00-gcc8//:folly",
+        "@com_github_gflags_gflags//:gflags",
+        "@com_google_glog//:glog",
+        "@cpp3rdlib_krb5_1.17-3-gcc8//:gssapi_krb5",
+        "@cpp3rdlib_krb5_1.17-3-gcc8//:k5crypto",
+        "@cpp3rdlib_krb5_1.17-3-gcc8//:krb5",
+        "@cpp3rdlib_krb5_1.17-3-gcc8//:krb5support",
+        "@cpp3rdlib_wangle_v2018.08.20.00-gcc8//:wangle",
+    ],
+)
+
+filegroup(
+    name = "security_lib",
+    srcs = [
+        "cpp3rdlib/fbthrift/lib",
+        "@cpp3rdlib_boost_1.72.0-gcc8//:boost_atomic_lib",
+        "@cpp3rdlib_boost_1.72.0-gcc8//:boost_date_time_lib",
+        "@cpp3rdlib_boost_1.72.0-gcc8//:boost_filesystem_lib",
+        "@cpp3rdlib_boost_1.72.0-gcc8//:boost_iostreams_lib",
+        "@cpp3rdlib_boost_1.72.0-gcc8//:boost_regex_lib",
+        "@cpp3rdlib_boost_1.72.0-gcc8//:boost_system_lib",
+        "@cpp3rdlib_boost_1.72.0-gcc8//:boost_thread_lib",
+        "@cpp3rdlib_comerr_1.44.5-gcc8//:com_err_lib",
+        "@cpp3rdlib_folly_v2018.08.20.00-gcc8//:folly_lib",
+        "@com_github_gflags_gflags//:gflags_lib",
+        
+        "@cpp3rdlib_krb5_1.17-3-gcc8//:gssapi_krb5_lib",
+        "@cpp3rdlib_krb5_1.17-3-gcc8//:k5crypto_lib",
+        "@cpp3rdlib_krb5_1.17-3-gcc8//:krb5_lib",
+        "@cpp3rdlib_krb5_1.17-3-gcc8//:krb5support_lib",
+        "@cpp3rdlib_wangle_v2018.08.20.00-gcc8//:wangle_lib",
+    ],
+)
+
+cc_library(
+    name = "thriftprotocol",
+    srcs = [
+        "cpp3rdlib/fbthrift/lib/libthriftprotocol.a",
+    ],
+    hdrs = glob([
+        "cpp3rdlib/fbthrift/include/**/*",
+        "cpp3rdlib/fbthrift/**/*.h",
+        "cpp3rdlib/fbthrift/**/*.hpp",
+    ]),
+    copts = [
+        "-Wno-error=unused-variable",
+        "-I.",
+        "-Wno-error=unused-but-set-variable",
+        "-Wno-error=unused-parameter",
+    ],
+    includes = [
+        ".",
+        "cpp3rdlib/fbthrift",
+        "cpp3rdlib/fbthrift/include",
+    ],
+    deps = [
+        ":thrift",
+        "@cpp3rdlib_folly_v2018.08.20.00-gcc8//:folly",
+        "@cpp3rdlib_wangle_v2018.08.20.00-gcc8//:wangle",
+    ],
+)
+
+filegroup(
+    name = "thriftprotocol_lib",
+    srcs = [
+        "cpp3rdlib/fbthrift/lib",
+        ":thrift_lib",
+        "@cpp3rdlib_folly_v2018.08.20.00-gcc8//:folly_lib",
+        "@cpp3rdlib_wangle_v2018.08.20.00-gcc8//:wangle_lib",
+    ],
+)

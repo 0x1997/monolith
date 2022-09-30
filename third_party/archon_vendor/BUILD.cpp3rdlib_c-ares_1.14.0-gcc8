@@ -1,0 +1,26 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "cares",
+  srcs = ["cpp3rdlib/c-ares/lib/libcares.a",
+  ],
+  hdrs = glob(["cpp3rdlib/c-ares/include/**/*",
+               "cpp3rdlib/c-ares/**/*.h",
+               "cpp3rdlib/c-ares/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/c-ares/include",
+              ".",
+              "cpp3rdlib/c-ares"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+)
+
+filegroup(
+  name = "cares_lib",
+  srcs = ["cpp3rdlib/c-ares/lib",
+  ],
+)
+

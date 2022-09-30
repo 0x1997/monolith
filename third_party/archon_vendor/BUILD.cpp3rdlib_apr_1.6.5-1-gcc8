@@ -1,0 +1,36 @@
+package(default_visibility = ["//visibility:public"])
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+
+
+cc_library(
+  name = "apr-1",
+  srcs = ["cpp3rdlib/apr/lib/libapr-1.a",
+  ],
+  hdrs = glob(["cpp3rdlib/apr/include/apr-1.0/**/*",
+               "cpp3rdlib/apr/**/*.h",
+               "cpp3rdlib/apr/**/*.hpp",
+               "cpp3rdlib/apr/include/**/*"
+  ]),
+  includes = ["cpp3rdlib/apr/include/apr-1.0",
+              ".",
+              "cpp3rdlib/apr",
+              "cpp3rdlib/apr/include"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+  linkopts = [
+              "-lcrypt",
+              "-lpthread"
+  ],
+)
+
+filegroup(
+  name = "apr-1_lib",
+  srcs = ["cpp3rdlib/apr/lib",
+  ],
+)
+

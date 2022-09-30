@@ -1,0 +1,29 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "mstch",
+  srcs = ["cpp3rdlib/mstch/lib/libmstch.a",
+  ],
+  hdrs = glob(["cpp3rdlib/mstch/include/**/*",
+               "cpp3rdlib/mstch/**/*.h",
+               "cpp3rdlib/mstch/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/mstch/include",
+              ".",
+              "cpp3rdlib/mstch"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+  deps = ["@cpp3rdlib_boost_1.72.0-gcc8//:boost",
+  ],
+)
+
+filegroup(
+  name = "mstch_lib",
+  srcs = ["cpp3rdlib/mstch/lib",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost_lib"
+  ],
+)
+

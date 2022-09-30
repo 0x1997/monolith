@@ -1,0 +1,33 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "libevent",
+  srcs = ["cpp3rdlib/libevent/lib/libevent.a",
+  ],
+  hdrs = glob(["cpp3rdlib/libevent/include/**/*",
+               "cpp3rdlib/libevent/**/*.h",
+               "cpp3rdlib/libevent/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/libevent/include",
+              ".",
+              "cpp3rdlib/libevent"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+  linkopts = ["-lpthread",
+  ],
+  deps = ["@cpp3rdlib_openssl_1.0.2-gcc8//:ssl",
+          "@cpp3rdlib_openssl_1.0.2-gcc8//:crypto"
+  ],
+)
+
+filegroup(
+  name = "libevent_lib",
+  srcs = ["cpp3rdlib/libevent/lib",
+          "@cpp3rdlib_openssl_1.0.2-gcc8//:crypto_lib",
+          "@cpp3rdlib_openssl_1.0.2-gcc8//:ssl_lib"
+  ],
+)
+

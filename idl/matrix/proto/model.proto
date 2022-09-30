@@ -1,0 +1,286 @@
+// Copyright 2022 ByteDance and/or its affiliates.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto2";
+package neo.proto;
+
+import "idl/matrix/proto/parameter_opt.proto";
+
+message RealtimeConfig
+{
+    optional string fifo_path = 1;
+    optional int64 period = 2;
+}
+
+message SlotConfig
+{
+    optional int32 slot_id = 1;
+    optional double alpha = 2;
+    optional double beta = 3 [default = 1.0];
+    optional double lambda1 = 4;
+    optional double lambda2 = 5;
+    optional bool slot_mask = 6;
+    optional bool sparse_slot = 7;
+    optional int32 occurrence_threshold = 8;
+    optional bool train = 17 [default = true];
+    optional double init_value = 21 [default = 0];
+    optional double gamma = 24;
+    optional double grad_clip = 25 [default = 0];
+
+    optional int32 vec_threshold = 9  [default = 0];
+    optional int32 vec_l1_shrink = 10 [default = 0];
+    optional int32 vec_dimension = 11 [default = 0];
+    optional int32 feature_number = 22 [default = 1];
+    optional string data_transformer = 23 [default = "sum_pooling"];
+    optional double vec_alpha    = 12 [default = 0.1];
+    optional double vec_beta     = 13 [default = 1.0];
+    optional double vec_lambda1  = 14 [default = 0];
+    optional double vec_lambda2  = 15 [default = 0];
+    optional double vec_init_factor = 16 [default = 0.1];
+    optional bool vec_init_normal_distribution = 18 [default = false];
+    optional double vec_normal_distribution_mean = 19 [default = 0.0];
+    optional double vec_normal_distribution_stddev = 20 [default = 1.0];
+    optional double vec_grad_clip = 26 [default = 0];
+    optional double norm = 27 [default = 0];
+    optional int32 opt_type = 28 [default = 0];        // 之后改为用OptConfig(deprecated)
+    optional uint32 expire_time = 29 [default = 0];
+    optional double vec_n_max = 30 [default = 0.0];
+    optional int64 share_slot_id = 31 [default = -1];
+    optional OptConfig opt_config = 32;                // 优先使用
+    optional OptConfig vec_opt_config = 35;                // 优先使用
+    optional string slot_pooling = 33 [default = ""]; //if empty, use global slot_pooling
+    optional bool share_sub_slot = 34 [default = false];
+    repeated OptConfig opt_config_ext = 36;     // 供分段优化使用
+    // If this is true, it means batch_size for this feature will always be 1,
+    // in other words, data for this feature will be broadcast to all instances.
+    optional bool is_context_feature = 37 [default = false];
+}
+
+message FeatureColumnConfig
+{
+    optional string name = 1;
+    optional int32 slot_id = 2;
+    optional bool train = 3 [default = true];
+    optional bool use_vector = 4 [default = true];
+    // pooling method, or in-graph pooling
+    optional string data_transformer = 6 [default = "sum_pooling"];
+    // if in graph pooling, how many features are used
+    optional int32 feature_number = 7 [default = 1];
+    // corresponding to FeatureColumnV1, FeatureColumnV2, etc. in SailAPI
+    // - If 1, this fc_config is mapping to the original slot inputs, named by
+    //    slot_id.
+    // - If 2, this fc_config is mapping to the fc inputs, named by fc_name.
+    optional int32 version = 8 [default = 1];
+    // If this is true, it means batch_size for this feature will always be 1,
+    // in other words, data for this feature will be broadcast to all instances.
+    optional bool is_context_feature = 9 [default = false];
+    // Data type of this placeholder 
+    optional int32 dtype = 10 [default = 1];  // default DT_FLOAT
+}
+
+message DenseFeatureConfig
+{
+    optional string name = 1;
+    // currently only support 2d tensor (batch_size * dim) for the input,
+    // meaning only dim(0) is valid.
+    repeated int32 dim = 2;
+    // If this is true, it means batch_size for this feature will always be 1,
+    // in other words, data for this feature will be broadcast to all instances.
+    optional bool is_context_feature = 3 [default = false];
+    // Data type of this placeholder 
+    optional int32 dtype = 4 [default = 1];  // default DT_FLOAT
+}
+
+message NetworkFid
+{
+    optional string name = 1;
+    optional double alpha = 2;
+    optional double beta = 3 [default = 1.0];
+    optional double lambda1 = 4;
+    optional double lambda2 = 5;
+    repeated int32 dim = 6;
+    optional double init_factor = 7 [default = 0.1];
+    optional int32 opt_type = 8 [default = 0];        // 之后改为用OptConfig(deprecated)
+    optional OptConfig opt_config = 9;                // 优先使用
+    optional string variable_name = 10;               // merged variable name
+    optional int32 variable_offset = 11;              // merged variable offset
+}
+
+message ModelMeta
+{
+    optional string name = 1;
+    optional double alpha = 2;
+    optional double min_alpha = 27;
+    optional double max_alpha = 28;
+    optional double beta = 3;
+    optional double lambda1 = 4;
+    optional double min_lambda1 = 25;
+    optional double max_lambda1 = 26;
+    optional double lambda2 = 5;
+    optional bool train = 34 [default = true];
+    optional int64 dump_timestamp = 6;
+    optional double sample_rate = 7;
+    optional bool use_filter = 8;
+    optional int64 filter_capacity = 9;
+    optional int32 occurrence_threshold = 10;
+    repeated int32 slot_mask = 11;
+    optional uint64 model_size = 12;
+    optional uint64 vec_model_size = 31;
+    repeated int32 sparse_slot = 13 [packed=true];
+    optional uint64 sparse_model_size = 14;
+    optional RealtimeConfig realtime_config = 15;
+    optional bool sliding_filter = 16;
+    optional uint32 sliding_split_number = 17;
+    optional bool independent_filter = 18;
+    optional string base_name = 19;
+    optional double retention_weight = 20;
+    repeated SlotConfig slot_config = 21;
+    optional double l1_tune_step = 22;
+    optional bool perslot_training = 23;
+    optional double alpha_tune_step = 24;
+    optional uint32 hash_trick_bit = 29;
+    optional bool use_network = 30 [default = false];
+
+    optional double l1_tune_decay = 32;
+    optional double alpha_tune_decay = 33;
+    optional uint32 current_day = 35 [default = 0];
+    optional string md5 = 50;
+    repeated NetworkFid network_fid = 36;
+    optional bool pack_param = 37 [default = false];
+    optional uint64 total_elements_limit = 38;
+    optional uint64 vec_total_elements_limit = 39;
+    optional double gamma = 40;
+    // 由PS设置, 表明备份中是否携带校验 (deprecated)
+    optional bool has_checksum = 41 [default = false];
+    optional bool use_fid_type = 42 [default = false];
+    // 需要清空重训的slot, 仅在load模型时生效
+    repeated int32 clear_slots = 43;
+    // 需要清空累积梯度的slot, 仅在load模型时生效
+    repeated int32 clear_grad_slots = 44;
+    optional string slot_pooling = 45 [default = "sum_pooling"];
+    optional uint64 global_step = 46 [default = 0];
+    optional double gradient_max_n = 47 [default = 0.0];
+    optional uint64 ssp_max_delay_step = 48 [default = 0];
+    // uid shrink 相关逻辑
+    optional int64 uid_shrink_size = 49 [default = 0];
+    optional int64 uid_filter_size = 51 [default = 0];
+
+    // 只配置 slot (>1024) , 不用来作为图的输入，若需要对应入图的tensor，
+    // 则必须配置对应的FeatureColumnConfig
+    repeated SlotConfig slot_config_ext = 53;
+    // sparse feature columns, 有序
+    repeated FeatureColumnConfig fc_config = 54;
+    // dense feature columns
+    repeated DenseFeatureConfig dense_fc_config = 57;
+    // 使用 sparse feature columns 的模型，必须 fid_version = 2
+    // 其他模型可选
+    optional int32 fid_version = 55 [default = 1];
+
+    // 兼容 Marine/Pilot 线上获取 tensorflow model 的输入输出
+    optional bytes serialized_runstep = 56;
+
+    // 设置为false时，get, update时一级表解锁位置提前
+    optional bool enable_dh_read_lock = 58 [default = true];
+    optional bool enable_dh_write_lock = 59 [default = true];
+
+    // The configuration for quantized aware training.
+    message QatConfig {
+        // If present, the vector embedding parameters will
+        // use this number as the range.
+        optional float fixed_range = 1;
+    }
+    optional QatConfig qat_config = 60;
+}
+
+message ValueVector
+{
+    repeated float value = 1 [packed=true];
+}
+
+message MapFieldEntry {
+    required string key = 1;
+    required ValueVector value = 2;
+}
+
+message KVList {
+    repeated MapFieldEntry kv = 1;
+}
+
+message ModelFeatures
+{
+    repeated fixed64 fid = 1 [packed=true];
+    repeated float value = 2 [packed=true];
+    repeated int64 timestamp = 3 [packed=true];
+    repeated float z = 4 [packed=true];
+    repeated float n = 5 [packed=true];
+    repeated float covariance = 6 [packed=true];
+
+    repeated ValueVector vec_w = 7;
+    repeated ValueVector vec_n = 8;
+    // values for serving
+    repeated ValueVector vec_s = 20;
+    repeated ValueVector vec_m = 9;
+    repeated ValueVector vec_v = 10;
+    repeated double decay_beta1 = 11 [packed=true];
+    repeated double decay_beta2 = 12 [packed=true];
+
+    optional bool is_checksum = 13 [default = false];
+    optional uint32 checksum = 14 [default = 0];
+
+    optional bool is_eof = 15 [default = false];
+    optional uint32 total_pack_count = 16 [default = 0];
+    repeated KVList fid_stats = 17;
+
+    // 用于存分段优化的数据
+    repeated bytes vec_dump = 18;
+    optional uint32 dump_version = 19 [default = 1];
+
+    // To support various extensions.
+    extensions 4096 to max;
+}
+
+message SparseModel
+{
+    repeated ModelFeatures features = 1;
+    repeated ModelFeatures packed_features = 2;
+    repeated int64 sparse_id = 3 [packed=true];
+    repeated int32 timestamp = 4 [packed=true];
+}
+
+message HashFilterMeta
+{
+    optional uint64 total_size = 1;
+    optional uint64 num_elements = 2;
+    optional uint64 capacity = 3;
+
+    // 由PS设置, 表明备份中是否携带校验(deprecated)
+    optional bool has_checksum = 4 [default = false];
+}
+
+message HashFilterValue
+{
+    repeated uint32 value = 1 [packed=true];
+
+    optional bool is_checksum = 2 [default = false];
+    optional uint32 checksum = 3 [default = 0];
+
+    optional bool is_eof = 4 [default = false];
+    optional uint32 total_pack_count = 5 [default = 0];
+}
+
+message DumpVersion
+{
+    optional int32 version = 1 [default = 0];
+}
+

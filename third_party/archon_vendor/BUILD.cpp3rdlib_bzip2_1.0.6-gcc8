@@ -1,0 +1,26 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "bz2",
+  srcs = ["cpp3rdlib/bzip2/lib/libbz2.a",
+  ],
+  hdrs = glob(["cpp3rdlib/bzip2/include/**/*",
+               "cpp3rdlib/bzip2/**/*.h",
+               "cpp3rdlib/bzip2/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/bzip2/include",
+              ".",
+              "cpp3rdlib/bzip2"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+)
+
+filegroup(
+  name = "bz2_lib",
+  srcs = ["cpp3rdlib/bzip2/lib",
+  ],
+)
+

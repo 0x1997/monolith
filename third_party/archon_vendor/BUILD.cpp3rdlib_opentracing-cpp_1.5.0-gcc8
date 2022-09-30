@@ -1,0 +1,33 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_import(
+  name = "opentracing-cpp_import",
+  shared_library = "cpp3rdlib/opentracing-cpp/lib/libopentracing.so.1",
+  hdrs = glob(["cpp3rdlib/opentracing-cpp/include/**/*",
+               "cpp3rdlib/opentracing-cpp/**/*.h",
+               "cpp3rdlib/opentracing-cpp/**/*.hpp"
+  ]),
+)
+
+cc_library(
+  name = "opentracing-cpp",
+  includes = ["cpp3rdlib/opentracing-cpp/include",
+              ".",
+              "cpp3rdlib/opentracing-cpp"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+  deps=[
+    ":opentracing-cpp_import",
+  ]
+)
+
+filegroup(
+  name = "opentracing-cpp_lib",
+  srcs = ["cpp3rdlib/opentracing-cpp/lib",
+  ],
+)
+

@@ -1,0 +1,54 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "wangle",
+  srcs = ["cpp3rdlib/wangle/lib/libwangle.a",
+  ],
+  hdrs = glob(["cpp3rdlib/wangle/include/**/*",
+               "cpp3rdlib/wangle/**/*.h",
+               "cpp3rdlib/wangle/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/wangle/include",
+              ".",
+              "cpp3rdlib/wangle"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+  linkopts = ["-lrt",
+              "-ldl"
+  ],
+  deps = ["@cpp3rdlib_openssl_1.0.2-gcc8//:ssl",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost_filesystem",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost_iostreams",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost_regex",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost_system",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost_thread",
+          "@cpp3rdlib_double-conversion_3.1.5-gcc8//:double-conversion",
+          "@cpp3rdlib_folly_v2018.08.20.00-gcc8//:folly",
+          "@com_github_gflags_gflags//:gflags",
+          "@com_google_glog//:glog",
+          "@com_github_libevent_libevent//:libevent",
+          "@cpp3rdlib_openssl_1.0.2-gcc8//:crypto"
+  ],
+)
+
+filegroup(
+  name = "wangle_lib",
+  srcs = ["cpp3rdlib/wangle/lib",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost_filesystem_lib",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost_iostreams_lib",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost_regex_lib",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost_system_lib",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost_thread_lib",
+          "@cpp3rdlib_double-conversion_3.1.5-gcc8//:double-conversion_lib",
+          "@cpp3rdlib_folly_v2018.08.20.00-gcc8//:folly_lib",
+          "@com_github_gflags_gflags//:gflags_lib",
+          
+          "@com_github_libevent_libevent//:libevent_lib",
+          "@cpp3rdlib_openssl_1.0.2-gcc8//:crypto_lib",
+          "@cpp3rdlib_openssl_1.0.2-gcc8//:ssl_lib"
+  ],
+)
+

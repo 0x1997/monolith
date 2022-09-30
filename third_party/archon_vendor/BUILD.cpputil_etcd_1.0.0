@@ -1,0 +1,36 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "etcd",
+  srcs = glob(["cpputil/etcd/*.cpp",
+  ]),
+  hdrs = glob(["cpputil/etcd/**/*.hpp",
+               "cpputil/etcd/**/*.h"
+  ]),
+  includes = ["cpputil/etcd",
+              "."
+  ],
+  copts = ["-g",
+           "-I.",
+           "-O3",
+           "-Wall",
+           "-Werror",
+           "-Wextra",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter",
+           "-Wno-error=unused-variable"
+  ],
+  deps = ["@cpputil_program_1.0.0//:conf",
+          "@cpp3rdlib_restclient-cpp_gcc8//:restclient-cpp",
+          "@cpputil_json_1.0.0//:json"
+  ],
+)
+
+filegroup(
+  name = "etcd_lib",
+  srcs = ["cpputil/etcd/lib",
+          "@cpp3rdlib_restclient-cpp_gcc8//:restclient-cpp_lib",
+          "@cpputil_json_1.0.0//:json_lib",
+          "@cpputil_program_1.0.0//:conf_lib"
+  ],
+)
+

@@ -1,0 +1,35 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "shmipc",
+    srcs = glob([
+        "shmipc/*.cc",
+    ]),
+    hdrs = glob([
+        "shmipc/**/*.h",
+    ]),
+    includes = [
+        ".",
+        "shmipc/",
+    ],
+    deps = [
+        ":shmipc_absl",
+    ],
+)
+
+cc_library(
+    name = "shmipc_absl",
+    srcs = [
+        "shmipc/vendor/absl/base/internal/raw_logging.cc",
+        "shmipc/vendor/absl/base/internal/throw_delegate.cc",
+        "shmipc/vendor/absl/base/log_severity.cc",
+        "shmipc/vendor/absl/types/bad_optional_access.cc",
+    ],
+    hdrs = glob([
+        "shmipc/**/*.h",
+    ]),
+    includes = [
+        ".",
+        "shmipc/",
+    ],
+)

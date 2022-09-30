@@ -1,0 +1,30 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "minizip",
+  srcs = ["cpputil/minizip/unzip.c",
+          "cpputil/minizip/ioapi.c"
+  ],
+  hdrs = glob(["cpputil/minizip/**/*.hpp",
+               "cpputil/minizip/**/*.h"
+  ]),
+  includes = ["cpputil/minizip",
+              "."
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+  linkopts = ["-lz",
+  ],
+  deps=[
+    "@zlib//:zlib",
+  ]
+)
+
+filegroup(
+  name = "minizip_lib",
+  srcs = ["cpputil/minizip/lib",
+  ],
+)
+

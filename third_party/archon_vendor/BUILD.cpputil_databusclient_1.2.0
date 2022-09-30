@@ -1,0 +1,58 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "databus",
+  srcs = ["cpputil/databusclient/databus_cpp_cache.cc",
+          "cpputil/databusclient/channel_impl.cc",
+          "cpputil/databusclient/client.cc"
+  ],
+  hdrs = glob(["cpputil/databusclient/include/**/*",
+               "cpputil/databusclient/**/*.h",
+               "cpputil/databusclient/**/*.hpp"
+  ]),
+  includes = ["cpputil/databusclient/include",
+              ".",
+              "cpputil/databusclient"
+  ],
+  copts = ["-g",
+           "-I.",
+           "-O2",
+           "-Wall",
+           "-Werror",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter",
+           "-Wno-error=unused-variable",
+           "-Wno-pointer-arith"
+  ],
+  linkopts = ["-lpthread",
+  ],
+  deps = ["@cpputil_metrics2_1.0.0//:metrics2",
+          ":databus_proto",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost_thread"
+  ],
+)
+
+filegroup(
+  name = "databus_lib",
+  srcs = ["cpputil/databusclient/lib",
+          ":databus_proto_lib",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost_thread_lib",
+          "@cpputil_metrics2_1.0.0//:metrics2_lib"
+  ],
+)
+
+proto_library(
+  name = "cc_databus_proto",
+  srcs = ["cpputil/databusclient/collector.proto",
+  ],
+  import_prefix = "",
+)
+
+cc_proto_library(
+  name = "databus_proto",
+  deps = [":cc_databus_proto",
+  ],
+)
+

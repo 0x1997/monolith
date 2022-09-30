@@ -1,0 +1,33 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_import(
+  name = "tbb_import",
+  hdrs = glob(["cpp3rdlib/tbb/include/**/*",
+               "cpp3rdlib/tbb/**/*.h",
+               "cpp3rdlib/tbb/**/*.hpp"
+  ]),
+  shared_library = "cpp3rdlib/tbb/lib/libtbb.so.2",
+)
+
+cc_library(
+  name = "tbb",
+  deps=[
+    ":tbb_import"
+  ],
+  includes = ["cpp3rdlib/tbb/include",
+              ".",
+              "cpp3rdlib/tbb",
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+)
+
+filegroup(
+  name = "tbb_lib",
+  srcs = ["cpp3rdlib/tbb/lib",
+  ],
+)
+

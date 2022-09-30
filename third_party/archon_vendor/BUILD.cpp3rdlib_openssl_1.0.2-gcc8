@@ -1,0 +1,54 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "crypto",
+  srcs = ["cpp3rdlib/openssl/lib/libcrypto.so.1.0.0",
+  ],
+  hdrs = glob(["cpp3rdlib/openssl/include/**/*",
+               "cpp3rdlib/openssl/**/*.h",
+               "cpp3rdlib/openssl/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/openssl/include",
+              ".",
+              "cpp3rdlib/openssl"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+)
+
+filegroup(
+  name = "crypto_lib",
+  srcs = ["cpp3rdlib/openssl/lib",
+  ],
+)
+
+cc_library(
+  name = "ssl",
+  srcs = ["cpp3rdlib/openssl/lib/libssl.so.1.0.0",
+  ],
+  hdrs = glob(["cpp3rdlib/openssl/include/**/*",
+               "cpp3rdlib/openssl/**/*.h",
+               "cpp3rdlib/openssl/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/openssl/include",
+              ".",
+              "cpp3rdlib/openssl"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+  deps = [":crypto",
+  ],
+)
+
+filegroup(
+  name = "ssl_lib",
+  srcs = ["cpp3rdlib/openssl/lib",
+          ":crypto_lib"
+  ],
+)
+

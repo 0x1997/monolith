@@ -1,0 +1,23 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "parallel_hashmap",
+  hdrs = glob(["cpp3rdlib/parallel-hashmap/**/*.hpp",
+               "cpp3rdlib/parallel-hashmap/**/*",
+               "cpp3rdlib/parallel-hashmap/**/*.h"
+  ]),
+  includes = ["cpp3rdlib/parallel-hashmap",
+              "."
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+)
+
+filegroup(
+  name = "parallel_hashmap_lib",
+  srcs = ["cpp3rdlib/parallel-hashmap/lib",
+  ],
+)
+

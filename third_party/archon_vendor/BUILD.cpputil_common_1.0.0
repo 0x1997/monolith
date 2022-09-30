@@ -1,0 +1,45 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "common_utils",
+  srcs = glob(["cpputil/common/string/*.cpp",
+               "cpputil/common/file/*.cpp",
+               "cpputil/common/hugemem/*.cpp",
+               "cpputil/common/random/*.cpp"
+  ]),
+  hdrs = glob(["cpputil/common/**/*.hpp",
+               "cpputil/common/**/*.h"
+  ]),
+  includes = ["cpputil/common",
+              "."
+  ],
+  copts = ["-g",
+           "-I.",
+           "-O3",
+           "-Wall",
+           "-Werror",
+           "-Wextra",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter",
+           "-Wno-error=unused-variable"
+  ],
+  deps = ["@cpputil_log_1.0.0//:log",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost_thread",
+          "@cpp3rdlib_cityhash_1.1.1-gcc8//:cityhash",
+          "@cpp3rdlib_parallel-hashmap_master//:parallel_hashmap",
+          "@cpp3rdlib_tbb_2020_U2-gcc8//:tbb"
+  ],
+)
+
+filegroup(
+  name = "common_utils_lib",
+  srcs = ["cpputil/common/lib",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost_lib",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost_thread_lib",
+          "@cpp3rdlib_cityhash_1.1.1-gcc8//:cityhash_lib",
+          "@cpp3rdlib_parallel-hashmap_master//:parallel_hashmap_lib",
+          "@cpp3rdlib_tbb_2020_U2-gcc8//:tbb_lib",
+          "@cpputil_log_1.0.0//:log_lib"
+  ],
+)
+

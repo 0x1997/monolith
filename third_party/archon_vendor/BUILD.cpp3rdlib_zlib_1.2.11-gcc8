@@ -1,0 +1,45 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "z",
+  srcs = ["cpp3rdlib/zlib/lib/libz.a",
+  ],
+  hdrs = glob(["cpp3rdlib/zlib/include/**/*",
+               "cpp3rdlib/zlib/**/*.h",
+               "cpp3rdlib/zlib/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/zlib/include",
+              ".",
+              "cpp3rdlib/zlib"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+)
+
+cc_library(
+  name = "zlib",
+  srcs = ["cpp3rdlib/zlib/lib/libz.a",
+  ],
+  hdrs = glob(["cpp3rdlib/zlib/include/**/*",
+               "cpp3rdlib/zlib/**/*.h",
+               "cpp3rdlib/zlib/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/zlib/include",
+              ".",
+              "cpp3rdlib/zlib"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+)
+
+filegroup(
+  name = "z_lib",
+  srcs = ["cpp3rdlib/zlib/lib",
+  ],
+)
+

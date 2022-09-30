@@ -1,0 +1,31 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "glog",
+  srcs = ["cpp3rdlib/glog/lib/libglog.a",
+  ],
+  hdrs = glob(["cpp3rdlib/glog/include/**/*",
+               "cpp3rdlib/glog/**/*.h",
+               "cpp3rdlib/glog/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/glog/include",
+              ".",
+              "cpp3rdlib/glog"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+  deps = ["@cpp3rdlib_unwind_1.2.1-gcc8//:unwind",
+          "@com_github_gflags_gflags//:gflags"
+  ],
+)
+
+filegroup(
+  name = "glog_lib",
+  srcs = ["cpp3rdlib/glog/lib",
+          "@com_github_gflags_gflags//:gflags_lib",
+          "@cpp3rdlib_unwind_1.2.1-gcc8//:unwind_lib"
+  ],
+)
+

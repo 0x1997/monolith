@@ -1,0 +1,92 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+
+package(default_visibility = ["//visibility:public"])
+
+
+cc_library(
+    name = "trace-client-cpp_fbthrift",
+    srcs = glob([
+        "trace/trace-client-cpp/protocol/fbthrift/jaegertracing/thrift-gen/*.cpp",
+        "trace/trace-client-cpp/jaegertracing/**/*.cpp",
+        "trace/trace-client-cpp/tracer.cpp",
+        "trace/trace-client-cpp/rate_limiter.cpp",
+        "trace/trace-client-cpp/sampler_etcd.cpp",
+        "trace/trace-client-cpp/transport_cppsdk.cpp",
+        "trace/trace-client-cpp/metrics.cpp",
+        "trace/trace-client-cpp/ext/*.cpp",
+        "trace/trace-client-cpp/utils.cpp",
+        "trace/trace-client-cpp/jaegertracing/SpanContext.cpp",
+        "trace/trace-client-cpp/jaegertracing/TraceID.cpp",
+    ]),
+    hdrs = glob([
+        "trace/trace-client-cpp/**/*.hpp",
+        "trace/trace-client-cpp/**/*.h",
+        "trace/trace-client-cpp/**/*.tcc",
+    ]),
+    copts = [
+        "-pg",
+        "-I.",
+        "-Itrace/trace-client-cpp/protocol/fbthrift/jaegertracing",
+        "-O3",
+        "-Wall",
+        "-Werror",
+        "-Wextra",
+        "-Wno-error=unused-but-set-variable",
+        "-Wno-error=unused-parameter",
+        "-Wno-error=unused-variable",
+        "-Wno-missing-field-initializers",
+        "-g",
+        "-std=c++14",
+    ],
+    includes = [
+        ".",
+        "trace/trace-client-cpp/protocol/fbthrift/",
+        "trace/trace-client-cpp",
+        "trace/trace-client-cpp/jaegertracing",
+        "trace/trace-client-cpp/protocol/fbthrift/jaegertracing",
+    ],
+    deps = [
+        ":msg_pb",
+        "@cpp3rdlib_nlohmann_json_v3.9.1//:json",
+        "@cpputil_databusclient_1.2.0//:databus",
+        "@cpputil_metrics2_1.0.0//:metrics2",
+        "@cpputil_tcc_1.0.0//:tcc",
+        "@opentracing//:opentracing-cpp",
+        "@cpp3rdlib_fbthrift_v2018.08.20.00-gcc8//:security",
+        "@cpp3rdlib_fbthrift_v2018.08.20.00-gcc8//:thrift",
+        "@cpp3rdlib_fbthrift_v2018.08.20.00-gcc8//:thriftcpp2",
+        "@cpp3rdlib_fbthrift_v2018.08.20.00-gcc8//:thriftfrozen2",
+        "@cpp3rdlib_fbthrift_v2018.08.20.00-gcc8//:thriftprotocol",
+        "@cpp3rdlib_fbthrift_v2018.08.20.00-gcc8//:transport",
+        "@cpp3rdlib_fbthrift_v2018.08.20.00-gcc8//:thrift-core",
+        "@cpp3rdlib_fbthrift_v2018.08.20.00-gcc8//:async",
+    ],
+)
+
+filegroup(
+    name = "trace-client-cpp_fbthrift_lib",
+    srcs = [
+        "trace/trace-client-cpp/lib",
+        ":msg_pb_lib",
+        "@cpp3rdlib_nlohmann_json_v3.9.1//:json_lib",
+        "@cpputil_databusclient_1.2.0//:databus_lib",
+        "@cpputil_metrics2_1.0.0//:metrics2_lib",
+        "@cpputil_tcc_1.0.0//:tcc_lib",
+    ],
+)
+
+proto_library(
+    name = "cc_msg_pb",
+    srcs = [
+        "trace/trace-client-cpp/msg.proto",
+    ],
+    # strip_import_prefix = "trace/trace-client-cpp",
+)
+
+cc_proto_library(
+    name = "msg_pb",
+    deps = [
+        ":cc_msg_pb",
+    ],
+)

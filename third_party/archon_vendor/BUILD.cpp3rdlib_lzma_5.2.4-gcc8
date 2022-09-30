@@ -1,0 +1,29 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "lzma",
+  srcs = ["cpp3rdlib/lzma/lib/liblzma.a",
+  ],
+  hdrs = glob(["cpp3rdlib/lzma/include/**/*",
+               "cpp3rdlib/lzma/**/*.h",
+               "cpp3rdlib/lzma/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/lzma/include",
+              ".",
+              "cpp3rdlib/lzma"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+  linkopts = ["-lpthread",
+              "-ldl"
+  ],
+)
+
+filegroup(
+  name = "lzma_lib",
+  srcs = ["cpp3rdlib/lzma/lib",
+  ],
+)
+

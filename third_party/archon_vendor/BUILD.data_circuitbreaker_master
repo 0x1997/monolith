@@ -1,0 +1,31 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "circuitbreaker",
+  srcs = ["data/circuitbreaker/metrics.cpp",
+          "data/circuitbreaker/circuitbreaker.cpp",
+          "data/circuitbreaker/flowcontroller.cpp"
+  ],
+  hdrs = glob(["data/circuitbreaker/**/*.hpp",
+               "data/circuitbreaker/**/*.h"
+  ]),
+  includes = ["data/circuitbreaker",
+              "."
+  ],
+  copts = ["-g",
+           "-I.",
+           "-O3",
+           "-Wall",
+           "-Werror",
+           "-Wextra",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter",
+           "-Wno-error=unused-variable"
+  ],
+)
+
+filegroup(
+  name = "circuitbreaker_lib",
+  srcs = ["data/circuitbreaker/lib",
+  ],
+)
+

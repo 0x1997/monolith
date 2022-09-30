@@ -1,0 +1,50 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "ciao",
+  srcs = glob(["data/ciao/src/ciao/*.cc",
+  ]),
+  hdrs = glob(["data/ciao/src/**/*",
+               "data/ciao/**/*.h",
+               "data/ciao/**/*.hpp"
+  ]),
+  includes = ["data/ciao/src",
+              ".",
+              "data/ciao"
+  ],
+  copts = ["-std=c++11",
+           "-I.",
+           "-O3",
+           "-Wall",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter",
+           "-Wno-error=unused-variable",
+           "-Wno-maybe-uninitialized",
+           "-Wno-memset-transposed-args",
+           "-Wno-reorder",
+           "-Wno-sign-compare",
+           "-Wno-unknown-pragmas",
+           "-Wno-unused-function",
+           "-Wno-unused-local-typedefs",
+           "-fno-omit-frame-pointer",
+           "-g"
+  ],
+  linkopts = ["-lpthread",
+  ],
+  deps = ["@data_evpp_master//:evpp",
+          "@com_google_glog//:glog",
+          "@com_github_libevent_libevent//:libevent",
+          "@cpp3rdlib_rapidjson_1.0.2-gcc8//:rapidjson"
+  ],
+  
+)
+
+filegroup(
+  name = "ciao_lib",
+  srcs = ["data/ciao/lib",
+          
+          "@com_github_libevent_libevent//:libevent_lib",
+          "@cpp3rdlib_rapidjson_1.0.2-gcc8//:rapidjson_lib",
+          "@data_evpp_master//:evpp_lib"
+  ],
+)
+

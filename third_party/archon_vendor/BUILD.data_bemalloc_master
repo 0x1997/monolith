@@ -1,0 +1,32 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "bemalloc_uc",
+  srcs = ["data/bemalloc/src/bemalloc.c",
+  ],
+  hdrs = glob(["data/bemalloc/src/**/*",
+               "data/bemalloc/**/*.h",
+               "data/bemalloc/**/*.hpp"
+  ]),
+  includes = ["data/bemalloc/src",
+              ".",
+              "data/bemalloc"
+  ],
+  copts = ["-std=gnu99",
+           "-I.",
+           "-O3",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter",
+           "-Wno-error=unused-variable"
+  ],
+  defines = ["ENABLE_UNLIMITED_CACHE=1",
+          "BEMALLOC_CONFIGURABLE=1",
+          "E"
+  ],
+)
+
+filegroup(
+  name = "bemalloc_uc_lib",
+  srcs = ["data/bemalloc/lib",
+  ],
+)
+

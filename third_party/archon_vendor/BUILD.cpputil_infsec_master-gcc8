@@ -1,0 +1,31 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "infsec",
+  srcs = ["cpputil/infsec/client/util.cpp",
+          "cpputil/infsec/client/DaemonClient.c",
+          "cpputil/infsec/client/InfSecClient.cpp"
+  ],
+  hdrs = glob(["cpputil/infsec/**/*.hpp",
+               "cpputil/infsec/**/*.h"
+  ]),
+  includes = ["cpputil/infsec",
+              "."
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+  linkopts = ["-lpthread",
+  ],
+  deps = ["@cpp3rdlib_rapidjson_1.0.2-gcc8//:rapidjson",
+  ],
+)
+
+filegroup(
+  name = "infsec_lib",
+  srcs = ["cpputil/infsec/lib",
+          "@cpp3rdlib_rapidjson_1.0.2-gcc8//:rapidjson_lib"
+  ],
+)
+

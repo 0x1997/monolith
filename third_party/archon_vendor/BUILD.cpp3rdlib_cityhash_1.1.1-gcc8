@@ -1,0 +1,26 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "cityhash",
+  srcs = ["cpp3rdlib/cityhash/lib/libcityhash.a",
+  ],
+  hdrs = glob(["cpp3rdlib/cityhash/include/**/*",
+               "cpp3rdlib/cityhash/**/*.h",
+               "cpp3rdlib/cityhash/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/cityhash/include",
+              ".",
+              "cpp3rdlib/cityhash"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+)
+
+filegroup(
+  name = "cityhash_lib",
+  srcs = ["cpp3rdlib/cityhash/lib",
+  ],
+)
+

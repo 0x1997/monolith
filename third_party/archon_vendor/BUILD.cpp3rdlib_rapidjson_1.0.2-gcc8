@@ -1,0 +1,24 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "rapidjson",
+  hdrs = glob(["cpp3rdlib/rapidjson/include/**/*",
+               "cpp3rdlib/rapidjson/**/*.h",
+               "cpp3rdlib/rapidjson/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/rapidjson/include",
+              ".",
+              "cpp3rdlib/rapidjson"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+)
+
+filegroup(
+  name = "rapidjson_lib",
+  srcs = ["cpp3rdlib/rapidjson/lib",
+  ],
+)
+

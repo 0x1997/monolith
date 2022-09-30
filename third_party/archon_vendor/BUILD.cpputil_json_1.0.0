@@ -1,0 +1,34 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "json",
+  srcs = glob(["cpputil/json/*.cpp",
+  ]),
+  hdrs = glob(["cpputil/json/**/*.hpp",
+               "cpputil/json/**/*.h"
+  ]),
+  includes = ["cpputil/json",
+              "."
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-O3",
+           "-Wall",
+           "-Werror",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+  deps = ["@cpputil_log_1.0.0//:log",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost_filesystem",
+          "@cpp3rdlib_rapidjson_1.0.2-gcc8//:rapidjson"
+  ],
+)
+
+filegroup(
+  name = "json_lib",
+  srcs = ["cpputil/json/lib",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost_filesystem_lib",
+          "@cpp3rdlib_rapidjson_1.0.2-gcc8//:rapidjson_lib",
+          "@cpputil_log_1.0.0//:log_lib"
+  ],
+)
+

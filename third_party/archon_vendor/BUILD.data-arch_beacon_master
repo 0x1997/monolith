@@ -1,0 +1,37 @@
+package(default_visibility = ["//visibility:public"])
+proto_library(
+    name = "report_pb",
+    srcs = ["report/idl/feature.proto"],
+    import_prefix = "data-arch/beacon",
+)
+
+cc_proto_library(
+    name = "cc_report_pb",
+    deps = [
+        ":report_pb",
+    ],
+)
+
+cc_library(
+    name = "beacon",
+    srcs = glob(["report/cpp/beacon/*.cc"]),
+    hdrs = glob(["report/cpp/**/*.h"]),
+    copts = [
+        "-g",
+        "-O2",
+        "-Wall",
+        "-Wno-pointer-arith",
+        "-Werror",
+    ],
+    includes = ["report/cpp"],
+    deps = [
+        ":cc_report_pb",
+        "@cpp3rdlib_folly_v2018.08.20.00-gcc8//:folly",
+        "@cpputil_consul_1.0.0//:consul",
+        "@cpputil_databusclient_1.2.0//:databus",
+        "@cpputil_env_master//:env",
+        "@cpputil_json_1.0.0//:json",
+        "@cpputil_log_1.0.0//:log",
+        "@cpputil_tcc_1.0.0//:tcc",
+    ],
+)

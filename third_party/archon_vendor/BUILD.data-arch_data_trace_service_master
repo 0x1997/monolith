@@ -1,0 +1,53 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "dts_collector",
+  srcs = glob(["data-arch/data_trace_service/src/dts/*.cpp",
+  ]),
+  hdrs = glob(["data-arch/data_trace_service/src/**/*",
+               "data-arch/data_trace_service/**/*.h",
+               "data-arch/data_trace_service/**/*.hpp"
+  ]),
+  includes = ["data-arch/data_trace_service/src",
+              ".",
+              "data-arch/data_trace_service"
+  ],
+  copts = ["-std=c++14",
+           "-I.",
+           "-O3",
+           "-Wall",
+           "-Werror",
+           "-Wextra",
+           "-Wno-comment",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter",
+           "-Wno-error=unused-variable",
+           "-Wno-pointer-arith",
+           "-Wno-unused-function",
+           "-Wno-unused-local-typedefs",
+           "-Wno-unused-parameter",
+           "-Wno-unused-variable",
+           "-g"
+  ],
+  deps = ["@data-arch_dts_idl_master//:dts",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost",
+          "@cpputil_consul_1.0.0//:consul",
+          "@cpputil_databusclient_1.2.0//:databus",
+          "@cpputil_json_1.0.0//:json",
+          "@cpputil_log_1.0.0//:log",
+          "@cpputil_tcc_1.0.0//:tcc"
+  ],
+)
+
+filegroup(
+  name = "dts_collector_lib",
+  srcs = ["data-arch/data_trace_service/lib",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost_lib",
+          "@cpputil_consul_1.0.0//:consul_lib",
+          "@cpputil_databusclient_1.2.0//:databus_lib",
+          "@cpputil_json_1.0.0//:json_lib",
+          "@cpputil_log_1.0.0//:log_lib",
+          "@cpputil_tcc_1.0.0//:tcc_lib",
+          "@data-arch_dts_idl_master//:dts_lib"
+  ],
+)
+

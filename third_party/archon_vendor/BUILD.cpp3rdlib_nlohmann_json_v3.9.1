@@ -1,0 +1,24 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "json",
+  hdrs = glob(["cpp3rdlib/nlohmann_json/include/**/*",
+               "cpp3rdlib/nlohmann_json/**/*.h",
+               "cpp3rdlib/nlohmann_json/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/nlohmann_json/include",
+              ".",
+              "cpp3rdlib/nlohmann_json"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+)
+
+filegroup(
+  name = "json_lib",
+  srcs = ["cpp3rdlib/nlohmann_json/lib",
+  ],
+)
+

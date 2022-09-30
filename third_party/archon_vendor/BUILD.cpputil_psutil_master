@@ -1,0 +1,51 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "psutil",
+    srcs = glob([
+        "cpputil/psutil/cpu/*.cpp",
+        "cpputil/psutil/memory/*.cpp",
+        "cpputil/psutil/*.cpp",
+    ]),
+    hdrs = glob([
+        "cpputil/psutil/**/*.hpp",
+        "cpputil/psutil/**/*.h",
+    ]),
+    copts = [
+        "-std=c++14",
+        "-I.",
+        "-O3",
+        "-Wall",
+        "-Werror",
+        "-Wextra",
+        "-Wno-comment",
+        "-Wno-error=unused-but-set-variable",
+        "-Wno-error=unused-parameter",
+        "-Wno-error=unused-variable",
+        "-Wno-missing-field-initializers",
+        "-Wno-unused-function",
+        "-Wno-unused-local-typedefs",
+        "-Wno-unused-parameter",
+        "-Wno-unused-variable",
+        "-g",
+        "-pthread",
+    ],
+    includes = [
+        ".",
+        "cpputil/psutil",
+    ],
+    deps = [
+        "@com_google_glog//:glog",
+        "@cpp3rdlib_folly_v2018.08.20.00-gcc8//:folly",
+        "@cpputil_log_1.0.0//:log",
+    ],
+)
+
+filegroup(
+    name = "psutil_lib",
+    srcs = [
+        "cpputil/psutil/lib",
+        "@cpp3rdlib_folly_v2018.08.20.00-gcc8//:folly_lib",
+        "@cpputil_log_1.0.0//:log_lib",
+    ],
+)

@@ -1,0 +1,22 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "jemalloc",
+  srcs = ["cpp3rdlib/jemalloc/lib/libjemalloc.a",
+  ],
+  hdrs = glob(["cpp3rdlib/jemalloc/include/**/*"
+  ]),
+  includes = ["cpp3rdlib/jemalloc/include"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+)
+
+filegroup(
+  name = "jemalloc_lib",
+  srcs = ["cpp3rdlib/jemalloc/lib",
+  ],
+)
+

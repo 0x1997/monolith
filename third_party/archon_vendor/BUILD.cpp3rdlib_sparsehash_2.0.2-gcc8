@@ -1,0 +1,24 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "sparsehash",
+  hdrs = glob(["cpp3rdlib/sparsehash/include/**/*",
+               "cpp3rdlib/sparsehash/**/*.h",
+               "cpp3rdlib/sparsehash/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/sparsehash/include",
+              ".",
+              "cpp3rdlib/sparsehash"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+)
+
+filegroup(
+  name = "sparsehash_lib",
+  srcs = ["cpp3rdlib/sparsehash/lib",
+  ],
+)
+

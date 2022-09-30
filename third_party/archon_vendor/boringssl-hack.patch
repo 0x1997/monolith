@@ -1,0 +1,81 @@
+diff --git a/include/folly/ExceptionWrapper.h b/include/folly/ExceptionWrapper.h
+index 5fe7096..9340d91 100644
+--- a/include/folly/ExceptionWrapper.h
++++ b/include/folly/ExceptionWrapper.h
+@@ -575,7 +575,7 @@ class exception_wrapper final {
+   //!
+   //! ew.handle(
+   //!   [&](std::logic_error const& e) {
+-  //!      LOG(DFATAL) << "ruh roh";
++  //!      LOG(FATAL) << "ruh roh";
+   //!      ew.throw_exception(); // rethrow the active exception without
+   //!                           // slicing it. Will not be caught by other
+   //!                           // handlers in this call.
+diff --git a/include/folly/fibers/FiberManagerInternal-inl.h b/include/folly/fibers/FiberManagerInternal-inl.h
+index de723eb..4c65676 100644
+--- a/include/folly/fibers/FiberManagerInternal-inl.h
++++ b/include/folly/fibers/FiberManagerInternal-inl.h
+@@ -541,11 +541,11 @@ FiberManager::FiberManager(
+         try {
+           std::rethrow_exception(eptr);
+         } catch (const std::exception& e) {
+-          LOG(DFATAL) << "Exception " << typeid(e).name() << " with message '"
++          LOG(FATAL) << "Exception " << typeid(e).name() << " with message '"
+                       << e.what() << "' was thrown in "
+                       << "FiberManager with context '" << context << "'";
+         } catch (...) {
+-          LOG(DFATAL) << "Unknown exception was thrown in FiberManager with "
++          LOG(FATAL) << "Unknown exception was thrown in FiberManager with "
+                       << "context '" << context << "'";
+         }
+       }),
+diff --git a/include/folly/logging/LogLevel.h b/include/folly/logging/LogLevel.h
+index 80db155..faa27dc 100644
+--- a/include/folly/logging/LogLevel.h
++++ b/include/folly/logging/LogLevel.h
+@@ -86,7 +86,7 @@ enum class LogLevel : uint32_t {
+   CRITICAL = 5000,
+ 
+   // DFATAL log messages crash the program on debug builds.
+-  DFATAL = 0x7ffffffe,
++  #define DFATAL FATAL
+   // FATAL log messages always abort the program.
+   // This level is equivalent to MAX_LEVEL.
+   FATAL = 0x7fffffff,
+@@ -143,7 +143,7 @@ std::ostream& operator<<(std::ostream& os, LogLevel level);
+  * Returns true if and only if a LogLevel is fatal.
+  */
+ inline constexpr bool isLogLevelFatal(LogLevel level) {
+-  return folly::kIsDebug ? (level >= LogLevel::DFATAL)
++  return folly::kIsDebug ? (level >= LogLevel::FATAL)
+                          : (level >= LogLevel::FATAL);
+ }
+ } // namespace folly
+diff --git a/include/folly/logging/xlog.h b/include/folly/logging/xlog.h
+index 205e8fc..53b9f1e 100644
+--- a/include/folly/logging/xlog.h
++++ b/include/folly/logging/xlog.h
+@@ -339,7 +339,7 @@
+  * When NDEBUG is not defined XDCHECK statements are not evaluated and will
+  * never log.
+  *
+- * You can use `XLOG_IF(DFATAL, condition)` instead if you want the condition to
++ * You can use `XLOG_IF(FATAL, condition)` instead if you want the condition to
+  * be evaluated in release builds but log a message without crashing the
+  * program.
+  */
+diff --git a/include/folly/portability/OpenSSL.h b/include/folly/portability/OpenSSL.h
+index 91b423c..ede0423 100644
+--- a/include/folly/portability/OpenSSL.h
++++ b/include/folly/portability/OpenSSL.h
+@@ -93,8 +93,8 @@ namespace portability {
+ namespace ssl {
+ 
+ #ifdef OPENSSL_IS_BORINGSSL
+-int SSL_CTX_set1_sigalgs_list(SSL_CTX* ctx, const char* sigalgs_list);
+-int TLS1_get_client_version(SSL* s);
++// int SSL_CTX_set1_sigalgs_list(SSL_CTX* ctx, const char* sigalgs_list);
++// int TLS1_get_client_version(SSL* s);
+ #endif
+ 
+ #if FOLLY_OPENSSL_IS_100

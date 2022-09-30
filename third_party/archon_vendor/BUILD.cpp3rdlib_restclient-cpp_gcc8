@@ -1,0 +1,34 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "restclient-cpp",
+  srcs = glob(["cpp3rdlib/restclient-cpp/source/*.cc",
+  ]),
+  hdrs = glob(["cpp3rdlib/restclient-cpp/include/**/*",
+               "cpp3rdlib/restclient-cpp/**/*.h",
+               "cpp3rdlib/restclient-cpp/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/restclient-cpp/include",
+              ".",
+              "cpp3rdlib/restclient-cpp"
+  ],
+  copts = ["-g",
+           "-I.",
+           "-O3",
+           "-Wall",
+           "-Werror",
+           "-Wextra",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter",
+           "-Wno-error=unused-variable"
+  ],
+  deps = ["@curl//:curl",
+  ],
+)
+
+filegroup(
+  name = "restclient-cpp_lib",
+  srcs = ["cpp3rdlib/restclient-cpp/lib",
+          "@curl//:curl_lib"
+  ],
+)
+

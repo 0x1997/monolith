@@ -1,0 +1,26 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "lz4",
+  srcs = ["cpp3rdlib/lz4/lib/liblz4.a",
+  ],
+  hdrs = glob(["cpp3rdlib/lz4/include/**/*",
+               "cpp3rdlib/lz4/**/*.h",
+               "cpp3rdlib/lz4/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/lz4/include",
+              ".",
+              "cpp3rdlib/lz4"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+)
+
+filegroup(
+  name = "lz4_lib",
+  srcs = ["cpp3rdlib/lz4/lib",
+  ],
+)
+

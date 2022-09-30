@@ -1,0 +1,36 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "metrics2",
+  srcs = glob(["cpputil/metrics2/*.cpp",
+  ]),
+  hdrs = glob(["cpputil/metrics2/**/*.hpp",
+               "cpputil/metrics2/**/*.h"
+  ]),
+  includes = ["cpputil/metrics2",
+              "."
+  ],
+  copts = ["-std=c++14",
+           "-I.",
+           "-O3",
+           "-Wall",
+           "-Werror",
+           "-Wextra",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter",
+           "-Wno-error=unused-variable",
+           "-g"
+  ],
+  linkopts = [
+  ],
+  deps = ["@com_github_gflags_gflags//:gflags",
+  "@msgpack//:msgpack"
+  ],
+)
+
+filegroup(
+  name = "metrics2_lib",
+  srcs = ["cpputil/metrics2/lib",
+          "@com_github_gflags_gflags//:gflags_lib"
+  ],
+)
+

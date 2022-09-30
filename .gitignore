@@ -1,0 +1,129 @@
+# Ignore .DS_Store
+.DS_Store
+fid_mapping/.DS_Store
+fid_analysis/.DS_Store
+
+# Ignore some test data files
+fid_mapping/test_data.gz
+fid_mapping/downloaded/*
+fid_analysis/downloaded/*
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+.env
+venv/
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*,cover
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Bazel binary folders
+/bazel-*
+/.vscode
+
+# user-specific bazelrc
+/.monolith_configure.bazelrc
+/.bazel4-compatible.bazelrc
+
+# Pretrained checkpoints
+monolith/tasks/image/efficientnet/efficientnet_checkpoints/ef*
+monolith/tasks/image/efficientnet/efficientnet_checkpoints/ef*/*
+monolith/native_training/tasks/shihuo/shihuo.pb
+monolith/native_training/tasks/reckon/iptv_push.pb
+monolith/native_training/tasks/iptv_ctr/iptv_data.pb
+monolith/agent_service/test_data/ckpt
+monolith/native_training/tasks/apiv2_test/instance.dat
+monolith/native_training/tasks/house_rank_cvr/instance.dat
+monolith/native_training/tasks/apiv2_test/model_dump
+monolith/native_training/tasks/vpc_test/model_dump
+monolith/native_training/tasks/roughsort_new_data/data_inst.pb
+monolith/native_training/tasks/alias_map_gen/data.pb
+idl/matrix/proto/*.pb.h
+idl/matrix/proto/*.pb.cc
+idl/matrix/proto/*_pb2.py
+
+set_tpu_args.sh
+output/
+.clwb
+.bazelrc.swp
+
+# CLion
+.idea
+cmake-build-*
+CMakeLists.txt
+*/iptv_instance.pb
+
+# GNU Global
+
+GPATH
+GRTAGS
+GTAGS
+
+
+# doc
+doc/build/*
+
+# docker build
+docker-build
+
+pyrightconfig.json
+
+### Added by Hedron's Bazel Compile Commands Extractor: https://github.com/hedronvision/bazel-compile-commands-extractor
+# The external link: Differs on Windows vs macOS/Linux, so we can't check it in. The pattern needs to not have a trailing / because it's a symlink on macOS/Linux.
+/external
+# Compiled output -> don't check in
+/compile_commands.json
+# Directory where clangd puts its indexing work
+/.cache/
+/scripts/BUILD*

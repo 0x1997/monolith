@@ -1,0 +1,21 @@
+diff --git a/protocol/fbthrift/jaegertracing/thrift-gen/BUILD b/protocol/fbthrift/jaegertracing/thrift-gen/BUILD
+deleted file mode 100644
+index 004cdcd..0000000
+--- a/protocol/fbthrift/jaegertracing/thrift-gen/BUILD
++++ /dev/null
+@@ -1,15 +0,0 @@
+-fbthrift1_library(
+-     name="jaeger.thrift",
+-     srcs=["throttling.thrift",
+-           "zipkincore.thrift",
+-           "agent.thrift",
+-           "aggregation_validator.thrift",
+-           "baggage.thrift",
+-           "dependency.thrift",
+-           "jaeger.thrift",
+-           "sampling.thrift",
+-     ],
+-    deps=["cpp3rdlib/fbthrift:v2018.08.20.00@//cpp3rdlib/fbthrift:thriftcpp2,thrift,thriftprotocol,thriftfrozen2",
+-     ],
+-    optimize=['-DGLOG_NO_ABBREVIATED_SEVERITIES', '-std=c++14', '-O3'],
+-)

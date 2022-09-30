@@ -1,0 +1,64 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "bytedtrace",
+  srcs = glob([
+      "cpputil/bytedtrace/**/*.cc",
+      "cpputil/bytedtrace/**/*.cpp",
+  ]),
+  hdrs = glob(["cpputil/bytedtrace/**/*.hpp",
+               "cpputil/bytedtrace/**/*.h"
+  ]),
+  includes = ["cpputil/bytedtrace",
+              "."
+  ],
+  copts = ["-std=c++14",
+           "-DGLOG_NO_ABBREVIATED_SEVERITIES",
+           "-I.",
+           "-O3",
+           "-Wall",
+           "-Werror",
+           "-Wextra",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter",
+           "-Wno-error=unused-variable",
+           "-Wno-missing-field-initializers",
+           "-Wno-sign-compare",
+           "-Wno-error=deprecated-declarations",
+  ],
+  deps = ["@cpputil_tcc_1.0.0//:tcc",
+          ":bytedtrace_pb",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost_thread",
+          "@cpp3rdlib_openssl_1.0.2-gcc8//:ssl",
+          "@cpputil_metrics2_1.0.0//:metrics2",
+          "@cpp3rdlib_nlohmann_json_v3.9.1//:json",
+  ],
+)
+
+filegroup(
+  name = "bytedtrace_lib",
+  srcs = ["cpputil/bytedtrace/lib",
+          ":bytedtrace_pb_lib",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost_thread_lib",
+          "@cpp3rdlib_openssl_1.0.2-gcc8//:ssl_lib",
+          "@cpputil_metrics2_1.0.0//:metrics2_lib",
+          "@cpputil_tcc_1.0.0//:tcc_lib",
+          "@cpp3rdlib_nlohmann_json_v3.9.1//:json_lib",
+  ],
+)
+
+proto_library(
+  name = "cc_bytedtrace_pb",
+  srcs = ["cpputil/bytedtrace/proto/bytedtrace.proto",
+  ],
+  strip_import_prefix = "cpputil/bytedtrace",
+)
+
+cc_proto_library(
+  name = "bytedtrace_pb",
+  deps = [":cc_bytedtrace_pb",
+  ],
+)
+

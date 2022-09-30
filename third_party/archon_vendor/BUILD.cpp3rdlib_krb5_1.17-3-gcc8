@@ -1,0 +1,122 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "gssapi_krb5",
+  srcs = ["cpp3rdlib/krb5/lib/libgssapi_krb5.so",
+  ],
+  hdrs = glob(["cpp3rdlib/krb5/include/**/*",
+               "cpp3rdlib/krb5/**/*.h",
+               "cpp3rdlib/krb5/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/krb5/include",
+              ".",
+              "cpp3rdlib/krb5"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+  deps = [":krb5",
+  ],
+)
+
+filegroup(
+  name = "gssapi_krb5_lib",
+  srcs = ["cpp3rdlib/krb5/lib",
+          ":krb5_lib"
+  ],
+)
+
+cc_library(
+  name = "k5crypto",
+  srcs = ["cpp3rdlib/krb5/lib/libk5crypto.so",
+  ],
+  hdrs = glob(["cpp3rdlib/krb5/include/**/*",
+               "cpp3rdlib/krb5/**/*.h",
+               "cpp3rdlib/krb5/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/krb5/include",
+              ".",
+              "cpp3rdlib/krb5"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+  deps = [":krb5support",
+  ],
+)
+
+filegroup(
+  name = "k5crypto_lib",
+  srcs = ["cpp3rdlib/krb5/lib",
+          ":krb5support_lib"
+  ],
+)
+
+cc_library(
+  name = "krb5",
+  srcs = ["cpp3rdlib/krb5/lib/libkrb5.so",
+  ],
+  hdrs = glob(["cpp3rdlib/krb5/include/**/*",
+               "cpp3rdlib/krb5/**/*.h",
+               "cpp3rdlib/krb5/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/krb5/include",
+              ".",
+              "cpp3rdlib/krb5"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+  linkopts = ["-lpthread",
+  ],
+  deps = ["@cpp3rdlib_keyutils_1.6.1-gcc8//:keyutils",
+          ":k5crypto",
+          "@cpp3rdlib_comerr_1.44.5-gcc8//:com_err"
+  ],
+)
+
+filegroup(
+  name = "krb5_lib",
+  srcs = ["cpp3rdlib/krb5/lib",
+          ":k5crypto_lib",
+          "@cpp3rdlib_comerr_1.44.5-gcc8//:com_err_lib",
+          "@cpp3rdlib_keyutils_1.6.1-gcc8//:keyutils_lib"
+  ],
+)
+
+cc_library(
+  name = "krb5support",
+  srcs = ["cpp3rdlib/krb5/lib/libkrb5support.so",
+  ],
+  hdrs = glob(["cpp3rdlib/krb5/include/**/*",
+               "cpp3rdlib/krb5/**/*.h",
+               "cpp3rdlib/krb5/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/krb5/include",
+              ".",
+              "cpp3rdlib/krb5"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+  linkopts = ["-lresolv",
+              "-ldl"
+  ],
+  deps = ["@cpp3rdlib_keyutils_1.6.1-gcc8//:keyutils",
+  ],
+)
+
+filegroup(
+  name = "krb5support_lib",
+  srcs = ["cpp3rdlib/krb5/lib",
+          "@cpp3rdlib_keyutils_1.6.1-gcc8//:keyutils_lib"
+  ],
+)
+

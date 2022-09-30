@@ -1,0 +1,94 @@
+package(default_visibility = ["//visibility:public"])
+cc_import(
+  name = "icui18n_import",
+  shared_library = "cpp3rdlib/icu/lib/libicui18n.so.65",
+  hdrs = glob(["cpp3rdlib/icu/include/**/*",
+               "cpp3rdlib/icu/**/*.h",
+               "cpp3rdlib/icu/**/*.hpp"
+  ]),
+)
+
+cc_library(
+  name = "icui18n",
+  includes = ["cpp3rdlib/icu/include",
+              ".",
+              "cpp3rdlib/icu"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+  deps=[
+    ":icui18n_import",
+  ]
+)
+
+filegroup(
+  name = "icui18n_lib",
+  srcs = ["cpp3rdlib/icu/lib",
+  ],
+)
+
+cc_import(
+  name = "icudata_import",
+  shared_library = "cpp3rdlib/icu/lib/libicudata.so.65",
+  hdrs = glob(["cpp3rdlib/icu/include/**/*",
+               "cpp3rdlib/icu/**/*.h",
+               "cpp3rdlib/icu/**/*.hpp"
+  ]),
+)
+
+cc_library(
+  name = "icudata",
+  includes = ["cpp3rdlib/icu/include",
+              ".",
+              "cpp3rdlib/icu"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+  deps = [
+    ":icudata_import",
+  ]
+)
+
+filegroup(
+  name = "icudata_lib",
+  srcs = ["cpp3rdlib/icu/lib",
+  ],
+)
+
+cc_import(
+  name = "icuuc_import",
+  shared_library = "cpp3rdlib/icu/lib/libicuuc.so.65",
+  hdrs = glob(["cpp3rdlib/icu/include/**/*",
+               "cpp3rdlib/icu/**/*.h",
+               "cpp3rdlib/icu/**/*.hpp"
+  ]),
+)
+
+cc_library(
+  name = "icuuc",
+  includes = ["cpp3rdlib/icu/include",
+              ".",
+              "cpp3rdlib/icu"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+  deps = [
+    ":icuuc_import",
+  ]
+)
+
+filegroup(
+  name = "icuuc_lib",
+  srcs = ["cpp3rdlib/icu/lib",
+  ],
+)
+

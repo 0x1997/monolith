@@ -1,0 +1,31 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "murmurhash3",
+  srcs = glob(["cpp3rdlib/murmurhash3/*.cpp",
+  ]),
+  hdrs = glob(["cpp3rdlib/murmurhash3/**/*.hpp",
+               "cpp3rdlib/murmurhash3/**/*",
+               "cpp3rdlib/murmurhash3/**/*.h"
+  ]),
+  includes = ["cpp3rdlib/murmurhash3",
+              "."
+  ],
+  copts = ["-g",
+           "-I.",
+           "-O3",
+           "-Wall",
+           "-Werror",
+           "-Wextra",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter",
+           "-Wno-error=unused-variable",
+           "-Wno-implicit-fallthrough"
+  ],
+)
+
+filegroup(
+  name = "murmurhash3_lib",
+  srcs = ["cpp3rdlib/murmurhash3/lib",
+  ],
+)
+

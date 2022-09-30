@@ -1,0 +1,26 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+  name = "idn",
+  srcs = ["cpp3rdlib/idn/lib/libidn.so"],
+  hdrs = glob(["cpp3rdlib/idn/include/**/*",
+               "cpp3rdlib/idn/**/*.h",
+               "cpp3rdlib/idn/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/idn/include",
+              ".",
+              "cpp3rdlib/idn"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+)
+
+filegroup(
+  name = "idn_lib",
+  srcs = ["cpp3rdlib/idn/lib",
+  ],
+)
+

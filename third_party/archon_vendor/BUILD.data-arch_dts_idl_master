@@ -1,0 +1,17 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+
+package(default_visibility = ["//visibility:public"])
+proto_library(
+  name = "cc_dts",
+  srcs = ["data-arch/dts_idl/data_trace_service.proto",
+  ],
+  strip_import_prefix = "data-arch",
+)
+
+cc_proto_library(
+  name = "dts",
+  deps = [":cc_dts",
+  ],
+)
+

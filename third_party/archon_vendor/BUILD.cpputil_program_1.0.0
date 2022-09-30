@@ -1,0 +1,38 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "conf",
+  srcs = ["cpputil/program/conf.cpp",
+  ],
+  hdrs = glob(["cpputil/program/**/*.hpp",
+               "cpputil/program/**/*.h"
+  ]),
+  includes = ["cpputil/program",
+              "."
+  ],
+  copts = ["-g",
+           "-I.",
+           "-O3",
+           "-Wall",
+           "-Werror",
+           "-Wextra",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter",
+           "-Wno-error=unused-variable"
+  ],
+  deps = ["@cpputil_consul_1.0.0//:consul",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost_filesystem",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost_regex",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost_system"
+  ],
+)
+
+filegroup(
+  name = "conf_lib",
+  srcs = ["cpputil/program/lib",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost_filesystem_lib",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost_regex_lib",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost_system_lib",
+          "@cpputil_consul_1.0.0//:consul_lib"
+  ],
+)
+

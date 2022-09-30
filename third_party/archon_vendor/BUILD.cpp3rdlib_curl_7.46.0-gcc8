@@ -1,0 +1,37 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "curl",
+  srcs = ["cpp3rdlib/curl/lib/libcurl.a",
+  ],
+  hdrs = glob(["cpp3rdlib/curl/include/**/*",
+               "cpp3rdlib/curl/**/*.h",
+               "cpp3rdlib/curl/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/curl/include",
+              ".",
+              "cpp3rdlib/curl"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+  deps = ["@zlib//:zlib",
+          "@cpp3rdlib_c-ares_1.14.0-gcc8//:cares",
+          "@cpp3rdlib_idn_1.33-gcc8//:idn",
+          "@cpp3rdlib_openssl_1.0.2-gcc8//:crypto",
+          "@cpp3rdlib_openssl_1.0.2-gcc8//:ssl"
+  ],
+)
+
+filegroup(
+  name = "curl_lib",
+  srcs = ["cpp3rdlib/curl/lib",
+          "@cpp3rdlib_c-ares_1.14.0-gcc8//:cares_lib",
+          "@cpp3rdlib_idn_1.33-gcc8//:idn_lib",
+          "@cpp3rdlib_openssl_1.0.2-gcc8//:crypto_lib",
+          "@cpp3rdlib_openssl_1.0.2-gcc8//:ssl_lib",
+          "@zlib//:zlib_lib"
+  ],
+)
+

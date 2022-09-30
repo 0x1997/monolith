@@ -1,0 +1,102 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_import(
+  name = "rdmacm_import",
+  shared_library = "cpp3rdlib/rdma-core/lib/librdmacm.so",
+  hdrs = glob(["cpp3rdlib/rdma-core/include/**/*",
+               "cpp3rdlib/rdma-core/**/*.h",
+               "cpp3rdlib/rdma-core/**/*.hpp"
+  ]),
+)
+
+cc_library(
+  name = "rdmacm",
+  
+  includes = ["cpp3rdlib/rdma-core/include",
+              ".",
+              "cpp3rdlib/rdma-core"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter",
+           "-std=c++14",
+           "-fpermissive"
+  ],
+  deps = [":nl-route-3",":rdmacm_import",
+  ],
+)
+
+filegroup(
+  name = "rdmacm_lib",
+  srcs = ["cpp3rdlib/rdma-core/lib",
+          ":nl-route-3_lib"
+  ],
+)
+
+cc_import(
+  name = "nl-route-3_import",
+  shared_library = "cpp3rdlib/rdma-core/lib/libnl-route-3.so",
+  hdrs = glob(["cpp3rdlib/rdma-core/include/**/*",
+               "cpp3rdlib/rdma-core/**/*.h",
+               "cpp3rdlib/rdma-core/**/*.hpp"
+  ]),
+)
+
+cc_library(
+  name = "nl-route-3",
+  includes = ["cpp3rdlib/rdma-core/include",
+              ".",
+              "cpp3rdlib/rdma-core"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter",
+           "-std=c++14",
+           "-fpermissive"
+  ],
+  deps = [
+    ":nl-route-3_import",
+  ]
+)
+
+filegroup(
+  name = "nl-route-3_lib",
+  srcs = ["cpp3rdlib/rdma-core/lib",
+  ],
+)
+
+cc_import(
+  name = "ibverbs_import",
+  shared_library="cpp3rdlib/rdma-core/lib/libibverbs.so.1.0.0",
+  hdrs = glob(["cpp3rdlib/rdma-core/include/**/*",
+               "cpp3rdlib/rdma-core/**/*.h",
+               "cpp3rdlib/rdma-core/**/*.hpp"
+  ]),
+)
+
+cc_library(
+  name = "ibverbs",
+  includes = ["cpp3rdlib/rdma-core/include",
+              ".",
+              "cpp3rdlib/rdma-core"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter",
+           "-std=c++14",
+           "-fpermissive"
+  ],
+  deps=[
+    ":ibverbs_import",
+  ]
+)
+
+filegroup(
+  name = "ibverbs_lib",
+  srcs = ["cpp3rdlib/rdma-core/lib",
+  ],
+)
+

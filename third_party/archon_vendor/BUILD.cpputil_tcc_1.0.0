@@ -1,0 +1,44 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "tcc",
+  srcs = glob(["cpputil/tcc/v2/*.cpp",
+               "cpputil/tcc/*.cpp",
+               "cpputil/tcc/general/*.cpp"
+  ]),
+  hdrs = glob(["cpputil/tcc/**/*.hpp",
+               "cpputil/tcc/**/*.h"
+  ]),
+  includes = ["cpputil/tcc",
+              "."
+  ],
+  copts = ["-g",
+           "-I.",
+           "-O3",
+           "-Wall",
+           "-Werror",
+           "-Wextra",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter",
+           "-Wno-error=unused-variable"
+  ],
+  deps = ["@cpputil_program_1.0.0//:conf",
+          "@cpp3rdlib_restclient-cpp_gcc8//:restclient-cpp",
+          "@cpputil_common_1.0.0//:common_utils",
+          "@cpputil_etcd_1.0.0//:etcd",
+          "@cpputil_json_1.0.0//:json",
+          "@cpputil_metrics2_1.0.0//:metrics2"
+  ],
+)
+
+filegroup(
+  name = "tcc_lib",
+  srcs = ["cpputil/tcc/lib",
+          "@cpp3rdlib_restclient-cpp_gcc8//:restclient-cpp_lib",
+          "@cpputil_common_1.0.0//:common_utils_lib",
+          "@cpputil_etcd_1.0.0//:etcd_lib",
+          "@cpputil_json_1.0.0//:json_lib",
+          "@cpputil_metrics2_1.0.0//:metrics2_lib",
+          "@cpputil_program_1.0.0//:conf_lib"
+  ],
+)
+

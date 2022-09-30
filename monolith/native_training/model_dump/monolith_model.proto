@@ -1,0 +1,123 @@
+// Copyright 2022 ByteDance and/or its affiliates.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+package monolith.native_training.model_dump;
+option cc_enable_arenas = true;
+
+import public "monolith/native_training/runtime/hash_table/compressor/float_compressor.proto";
+import public "monolith/native_training/runtime/hash_table/initializer/initializer_config.proto";
+import public "monolith/native_training/runtime/hash_table/optimizer/optimizer.proto";
+
+
+message FeatureColumn {
+  string feature_name = 1;
+  int32 occurrence_threshold = 2;
+  int32 expire_time = 3;
+  int32 max_seq_length = 4;
+  string shared_name = 5;
+}
+
+message LookupEmbeddingSlice {
+  string features = 1;
+  string slice_name = 2;
+  int32 slice_dim = 3;
+  monolith.hash_table.InitializerConfig initializer = 4;
+  monolith.hash_table.OptimizerConfig optimizer = 5;
+  monolith.hash_table.FloatCompressorConfig compressor = 6;
+  repeated string output_tensor_names = 7;
+  string group_out_type = 8;
+  string out_type = 9;
+}
+
+message InputFn {
+  string label = 1;
+  map<string, string> output_features = 2;
+  string parser_type = 3;
+  string item_pool = 4;
+}
+
+message ModelFn {
+  string label = 1;
+  string loss = 2;
+  repeated string predict = 3;
+  string head_name = 4;
+  map<string, string> non_ragged_features = 5;
+  repeated string extra_losses = 6;
+}
+
+message ServingInputReceiverFn {
+  map<string, string> features = 1;
+  map<string, string> receiver_name = 2;
+  string parser_type = 3;
+}
+
+message ExtraOutput {
+  string signature_name = 1;
+  map<string, string> fetch_dict = 2;
+}
+
+message Signature {
+  string name = 1;
+  map<string, string> inputs = 2;
+  map<string, string> outputs = 3;
+}
+
+message ProtoModel {
+  bytes params = 1;
+  repeated FeatureColumn features = 2;
+  repeated LookupEmbeddingSlice emb_slices = 3;
+  InputFn input_fn = 4;
+  ModelFn model_fn = 5;
+  ServingInputReceiverFn serving_input_receiver_fn = 6;
+  repeated ExtraOutput extra_output = 7;
+  repeated Signature signature = 8;
+  bytes optimizer = 9;
+  bytes graph_def = 10;
+}
+
+message HashTableConfig {
+  string name = 1;
+  bytes table_config = 2;
+  repeated string extra_restore_names = 3;
+  repeated float learning_rates = 4;
+}
+
+message FeatureSliceDim {
+  string name = 1;
+  repeated int32 dims = 2;
+}
+
+enum Combiner {
+  ReduceSum = 0;
+  ReduceMean = 1;
+  FirstN = 2;
+}
+
+message FeatureCombiner {
+  string name = 1;
+  Combiner combiner = 2;
+  int32 max_seq_length = 3;
+}
+
+message ModelDump {
+  map<string, ProtoModel> model_dump = 1;
+  string run_config = 2;
+  repeated HashTableConfig table_configs = 3;
+  repeated FeatureSliceDim feature_slice_dims = 4;
+  repeated FeatureCombiner feature_combiners = 5;
+
+  map<string, ProtoModel> ps_sub_model_dump = 10;
+  map<string, ProtoModel> dense_sub_model_dump = 11;
+}

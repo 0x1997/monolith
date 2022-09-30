@@ -1,0 +1,26 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "gflags",
+  srcs = ["cpp3rdlib/gflags/lib/libgflags.a",
+  ],
+  hdrs = glob(["cpp3rdlib/gflags/include/**/*",
+               "cpp3rdlib/gflags/**/*.h",
+               "cpp3rdlib/gflags/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/gflags/include",
+              ".",
+              "cpp3rdlib/gflags"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+)
+
+filegroup(
+  name = "gflags_lib",
+  srcs = ["cpp3rdlib/gflags/lib",
+  ],
+)
+

@@ -1,0 +1,31 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "log4cxx",
+  srcs = ["cpp3rdlib/log4cxx/lib/liblog4cxx.a",
+  ],
+  hdrs = glob(["cpp3rdlib/log4cxx/include/**/*",
+               "cpp3rdlib/log4cxx/**/*.h",
+               "cpp3rdlib/log4cxx/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/log4cxx/include",
+              ".",
+              "cpp3rdlib/log4cxx"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+  deps = ["@cpp3rdlib_aprutil_1.6.1-4-gcc8//:aprutil-1",
+          "@cpp3rdlib_apr_1.6.5-1-gcc8//:apr-1"
+  ],
+)
+
+filegroup(
+  name = "log4cxx_lib",
+  srcs = ["cpp3rdlib/log4cxx/lib",
+          "@cpp3rdlib_apr_1.6.5-1-gcc8//:apr-1_lib",
+          "@cpp3rdlib_aprutil_1.6.1-4-gcc8//:aprutil-1_lib"
+  ],
+)
+

@@ -1,0 +1,26 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "com_err",
+  srcs = ["cpp3rdlib/comerr/lib/libcom_err.a",
+  ],
+  hdrs = glob(["cpp3rdlib/comerr/include/**/*",
+               "cpp3rdlib/comerr/**/*.h",
+               "cpp3rdlib/comerr/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/comerr/include",
+              ".",
+              "cpp3rdlib/comerr"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+)
+
+filegroup(
+  name = "com_err_lib",
+  srcs = ["cpp3rdlib/comerr/lib",
+  ],
+)
+

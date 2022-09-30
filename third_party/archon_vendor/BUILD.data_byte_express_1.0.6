@@ -1,0 +1,50 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "ByteExpress",
+  srcs = glob(["data/byte_express/src/be/*.cpp",
+  ]),
+  hdrs = glob(["data/byte_express/src/**/*",
+               "data/byte_express/**/*.h",
+               "data/byte_express/**/*.hpp"
+  ]),
+  includes = ["data/byte_express/src",
+              ".",
+              "data/byte_express"
+  ],
+  copts = ["-std=c++14",
+           "-I.",
+           "-O3",
+           "-Wall",
+           "-Werror",
+           "-Werror=sign-compare",
+           "-Wextra",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter",
+           "-Wno-error=unused-variable",
+           "-fpermissive"
+  ],
+  deps = ["@data_bemalloc_master//:bemalloc_uc",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost",
+          "@cpp3rdlib_folly_v2018.08.20.00-gcc8//:folly",
+          "@cpp3rdlib_rdma-core_ofed-5.0-gcc8//:ibverbs",
+          "@cpp3rdlib_rdma-core_ofed-5.0-gcc8//:rdmacm",
+          "@cpp3rdlib_sparsehash_2.0.2-gcc8//:sparsehash",
+          "@cpputil_hdr_histogram_master//:HdrHistogram",
+          "@cpputil_metrics2_1.0.0//:metrics2"
+  ],
+)
+
+filegroup(
+  name = "ByteExpress_lib",
+  srcs = ["data/byte_express/lib",
+          "@cpp3rdlib_boost_1.72.0-gcc8//:boost_lib",
+          "@cpp3rdlib_folly_v2018.08.20.00-gcc8//:folly_lib",
+          "@cpp3rdlib_rdma-core_ofed-5.0-gcc8//:ibverbs_lib",
+          "@cpp3rdlib_rdma-core_ofed-5.0-gcc8//:rdmacm_lib",
+          "@cpp3rdlib_sparsehash_2.0.2-gcc8//:sparsehash_lib",
+          "@cpputil_hdr_histogram_master//:HdrHistogram_lib",
+          "@cpputil_metrics2_1.0.0//:metrics2_lib",
+          "@data_bemalloc_master//:bemalloc_uc_lib"
+  ],
+)
+

@@ -1,0 +1,32 @@
+fid: 16075259150315265803
+fid: 16090183798367473736
+fid: 16117703599236153919
+fid: 16130218881946979272
+fid: 16155307818066592567
+fid: 16171746794764599871
+fid: 16214972730325694542
+label: 0.0
+label: 1.0
+line_id {
+  uid: 5444469168157902802
+  req_time: 1620400415
+  item_id: 101083862119
+  actions: 1
+  vid: "bytedance"
+  generate_time: 1620400415
+  sample_rate: 1.0
+  user_id: "1EFPWANR41568ZJX06DC5F1YS71P77CSAH71KNP8NTNFEC6TY4"
+  page: "home"
+}
+feature {
+  name: "fc_user_click_goods_id_recent_list_90d"
+  fid: 253835562543010294
+  fid: 253794438330497680
+  fid: 253808367083597662
+  fid: 253626213712490657
+}
+feature {
+  name: "fc_user_click_goods_id_recent_list_90d_goods_cate_1_matched"
+  fid: 254398512496431606
+  fid: 254357388283918992
+}

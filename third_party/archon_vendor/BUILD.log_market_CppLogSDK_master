@@ -1,0 +1,56 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "logcxxsdk",
+  srcs = glob(["log_market/CppLogSDK/src/streamlog/*.cpp",
+  ]),
+  hdrs = glob(["log_market/CppLogSDK/src/**/*",
+               "log_market/CppLogSDK/**/*.h",
+               "log_market/CppLogSDK/**/*.hpp"
+  ]),
+  includes = ["log_market/CppLogSDK/src",
+              ".",
+              "log_market/CppLogSDK"
+  ],
+  copts = ["-std=c++14",
+           "-I.",
+           "-O3",
+           "-Wall",
+           "-Werror",
+           "-Wextra",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter",
+           "-Wno-error=unused-variable",
+           "-Wno-missing-field-initializers",
+           "-Wno-sign-compare",
+           "-g",
+           "-Wno-error=parentheses",
+           "-Wno-error=class-memaccess",
+           "-Wno-error=deprecated-declarations",
+  ],
+  deps = [":msg_proto",
+  ],
+)
+
+filegroup(
+  name = "logcxxsdk_lib",
+  srcs = ["log_market/CppLogSDK/lib",
+          ":msg_proto_lib"
+  ],
+)
+
+proto_library(
+  name = "cc_msg_proto",
+  srcs = ["src/streamlog/logmsg.proto",
+  ],
+  strip_import_prefix = "src",
+)
+
+cc_proto_library(
+  name = "msg_proto",
+  deps = [":cc_msg_proto",
+  ],
+)
+

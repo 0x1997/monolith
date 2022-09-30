@@ -1,0 +1,34 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "unwind",
+    srcs = [
+        "cpp3rdlib/unwind/lib/libunwind.so.8",
+    ],
+    hdrs = glob([
+        "cpp3rdlib/unwind/include/**/*",
+        "cpp3rdlib/unwind/**/*.h",
+        "cpp3rdlib/unwind/**/*.hpp",
+    ]),
+    copts = [
+        "-Wno-error=unused-variable",
+        "-I.",
+        "-Wno-error=unused-but-set-variable",
+        "-Wno-error=unused-parameter",
+    ],
+    includes = [
+        ".",
+        "cpp3rdlib/unwind",
+        "cpp3rdlib/unwind/include",
+    ],
+    deps = [
+        "@cpp3rdlib_lzma_5.2.4-gcc8//:lzma",
+    ],
+)
+
+filegroup(
+    name = "unwind_lib",
+    srcs = [
+        "cpp3rdlib/unwind/lib",
+    ],
+)

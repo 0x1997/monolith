@@ -1,0 +1,42 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "consul",
+  srcs = glob(["cpputil/consul/**/*.cpp",
+  ]),
+  hdrs = glob(["cpputil/consul/**/*.hpp",
+               "cpputil/consul/**/*.h"
+  ]),
+  includes = ["cpputil/consul",
+              "."
+  ],
+  copts = ["-g",
+           "-I.",
+           "-O3",
+           "-Wall",
+           "-Werror",
+           "-Wextra",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter",
+           "-Wno-error=unused-variable"
+  ],
+  linkopts = ["-lz",
+              "-lpthread",
+              "-lrt"
+  ],
+  deps = ["@cpputil_minizip_1.0.0-gcc8//:minizip",
+          "@curl//:curl",
+          "@cpp3rdlib_rapidjson_1.0.2-gcc8//:rapidjson",
+          "@cpputil_log_1.0.0//:log"
+  ],
+)
+
+filegroup(
+  name = "consul_lib",
+  srcs = ["cpputil/consul/lib",
+          "@curl//:curl_lib",
+          "@cpp3rdlib_rapidjson_1.0.2-gcc8//:rapidjson_lib",
+          "@cpputil_log_1.0.0//:log_lib",
+          "@cpputil_minizip_1.0.0-gcc8//:minizip_lib"
+  ],
+)
+

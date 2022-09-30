@@ -1,0 +1,297 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "boost_context",
+  srcs = ["cpp3rdlib/boost/lib/libboost_context.a",
+  ],
+  hdrs = glob(["cpp3rdlib/boost/include/**/*",
+               "cpp3rdlib/boost/**/*.h",
+               "cpp3rdlib/boost/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/boost/include",
+              ".",
+              "cpp3rdlib/boost"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+)
+
+filegroup(
+  name = "boost_context_lib",
+  srcs = ["cpp3rdlib/boost/lib",
+  ],
+)
+
+cc_library(
+  name = "boost_atomic",
+  srcs = ["cpp3rdlib/boost/lib/libboost_atomic.a",
+  ],
+  hdrs = glob(["cpp3rdlib/boost/include/**/*",
+               "cpp3rdlib/boost/**/*.h",
+               "cpp3rdlib/boost/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/boost/include",
+              ".",
+              "cpp3rdlib/boost"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+)
+
+filegroup(
+  name = "boost_atomic_lib",
+  srcs = ["cpp3rdlib/boost/lib",
+  ],
+)
+
+cc_library(
+  name = "boost_chrono",
+  srcs = ["cpp3rdlib/boost/lib/libboost_chrono.a",
+  ],
+  hdrs = glob(["cpp3rdlib/boost/include/**/*",
+               "cpp3rdlib/boost/**/*.h",
+               "cpp3rdlib/boost/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/boost/include",
+              ".",
+              "cpp3rdlib/boost"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+  deps = [":boost_system",
+  ],
+)
+
+filegroup(
+  name = "boost_chrono_lib",
+  srcs = ["cpp3rdlib/boost/lib",
+          ":boost_system_lib"
+  ],
+)
+
+cc_library(
+  name = "boost_thread",
+  srcs = ["cpp3rdlib/boost/lib/libboost_thread.a",
+  ],
+  hdrs = glob(["cpp3rdlib/boost/include/**/*",
+               "cpp3rdlib/boost/**/*.h",
+               "cpp3rdlib/boost/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/boost/include",
+              ".",
+              "cpp3rdlib/boost"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+  deps = [":boost_system",
+  ],
+)
+
+filegroup(
+  name = "boost_thread_lib",
+  srcs = ["cpp3rdlib/boost/lib",
+          ":boost_system_lib"
+  ],
+)
+
+cc_library(
+  name = "boost_date_time",
+  srcs = ["cpp3rdlib/boost/lib/libboost_date_time.a",
+  ],
+  hdrs = glob(["cpp3rdlib/boost/include/**/*",
+               "cpp3rdlib/boost/**/*.h",
+               "cpp3rdlib/boost/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/boost/include",
+              ".",
+              "cpp3rdlib/boost"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+)
+
+filegroup(
+  name = "boost_date_time_lib",
+  srcs = ["cpp3rdlib/boost/lib",
+  ],
+)
+
+cc_library(
+  name = "boost_filesystem",
+  srcs = ["cpp3rdlib/boost/lib/libboost_filesystem.a",
+  ],
+  hdrs = glob(["cpp3rdlib/boost/include/**/*",
+               "cpp3rdlib/boost/**/*.h",
+               "cpp3rdlib/boost/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/boost/include",
+              ".",
+              "cpp3rdlib/boost"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+  deps = [":boost_system",
+  ],
+)
+
+filegroup(
+  name = "boost_filesystem_lib",
+  srcs = ["cpp3rdlib/boost/lib",
+          ":boost_system_lib"
+  ],
+)
+
+cc_library(
+  name = "boost_regex",
+  srcs = ["cpp3rdlib/boost/lib/libboost_regex.a",
+  ],
+  hdrs = glob(["cpp3rdlib/boost/include/**/*",
+               "cpp3rdlib/boost/**/*.h",
+               "cpp3rdlib/boost/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/boost/include",
+              ".",
+              "cpp3rdlib/boost"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+  deps = ["@cpp3rdlib_icu_65.1-gcc8//:icuuc",
+          "@cpp3rdlib_icu_65.1-gcc8//:icudata",
+          "@cpp3rdlib_icu_65.1-gcc8//:icui18n"
+  ],
+)
+
+filegroup(
+  name = "boost_regex_lib",
+  srcs = ["cpp3rdlib/boost/lib",
+          "@cpp3rdlib_icu_65.1-gcc8//:icudata_lib",
+          "@cpp3rdlib_icu_65.1-gcc8//:icui18n_lib",
+          "@cpp3rdlib_icu_65.1-gcc8//:icuuc_lib"
+  ],
+)
+
+cc_library(
+  name = "boost_program_options",
+  srcs = ["cpp3rdlib/boost/lib/libboost_program_options.a",
+  ],
+  hdrs = glob(["cpp3rdlib/boost/include/**/*",
+               "cpp3rdlib/boost/**/*.h",
+               "cpp3rdlib/boost/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/boost/include",
+              ".",
+              "cpp3rdlib/boost"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+)
+
+filegroup(
+  name = "boost_program_options_lib",
+  srcs = ["cpp3rdlib/boost/lib",
+  ],
+)
+
+cc_library(
+  name = "boost_system",
+  srcs = ["cpp3rdlib/boost/lib/libboost_system.a",
+  ],
+  hdrs = glob(["cpp3rdlib/boost/include/**/*",
+               "cpp3rdlib/boost/**/*.h",
+               "cpp3rdlib/boost/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/boost/include",
+              ".",
+              "cpp3rdlib/boost"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+)
+
+filegroup(
+  name = "boost_system_lib",
+  srcs = ["cpp3rdlib/boost/lib",
+  ],
+)
+
+cc_library(
+  name = "boost",
+  hdrs = glob(["cpp3rdlib/boost/include/**/*",
+               "cpp3rdlib/boost/**/*.h",
+               "cpp3rdlib/boost/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/boost/include",
+              ".",
+              "cpp3rdlib/boost"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+)
+
+filegroup(
+  name = "boost_lib",
+  srcs = ["cpp3rdlib/boost/lib",
+  ],
+)
+
+cc_library(
+  name = "boost_iostreams",
+  srcs = ["cpp3rdlib/boost/lib/libboost_iostreams.a",
+  ],
+  hdrs = glob(["cpp3rdlib/boost/include/**/*",
+               "cpp3rdlib/boost/**/*.h",
+               "cpp3rdlib/boost/**/*.hpp"
+  ]),
+  includes = ["cpp3rdlib/boost/include",
+              ".",
+              "cpp3rdlib/boost"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+  deps = ["@zlib//:zlib",
+          "@cpp3rdlib_bzip2_1.0.6-gcc8//:bz2",
+          "@cpp3rdlib_lzma_5.2.4-gcc8//:lzma"
+  ],
+)
+
+filegroup(
+  name = "boost_iostreams_lib",
+  srcs = ["cpp3rdlib/boost/lib",
+          "@cpp3rdlib_bzip2_1.0.6-gcc8//:bz2_lib",
+          "@cpp3rdlib_lzma_5.2.4-gcc8//:lzma_lib",
+          "@zlib//:zlib_lib"
+  ],
+)
+

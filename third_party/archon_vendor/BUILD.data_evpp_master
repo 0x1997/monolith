@@ -1,0 +1,26 @@
+package(default_visibility = ["//visibility:public"])
+cc_library(
+  name = "evpp",
+  srcs = ["data/evpp/lib/libevpp_static.a",
+  ],
+  hdrs = glob(["data/evpp/include/**/*",
+               "data/evpp/**/*.h",
+               "data/evpp/**/*.hpp"
+  ]),
+  includes = ["data/evpp/include",
+              ".",
+              "data/evpp"
+  ],
+  copts = ["-Wno-error=unused-variable",
+           "-I.",
+           "-Wno-error=unused-but-set-variable",
+           "-Wno-error=unused-parameter"
+  ],
+)
+
+filegroup(
+  name = "evpp_lib",
+  srcs = ["data/evpp/lib",
+  ],
+)
+
